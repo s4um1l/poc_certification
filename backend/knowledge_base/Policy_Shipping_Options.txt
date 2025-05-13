@@ -1,0 +1,43 @@
+# Company Policy: Shipping Options & Fulfillment
+
+**1. Overview:**
+This policy details the shipping methods offered, associated costs, delivery estimates, and order processing timelines.
+
+**2. Domestic Shipping Options (Continental US):**
+
+  **a) Standard Shipping:**
+    - **Carrier(s):** USPS Ground Advantage / UPS SurePost (or similar)
+    - **Estimated Delivery:** 5-7 business days after shipment.
+    - **Cost:** Flat rate of $7.95 OR Free for orders over $50 (subtotal after discounts, before taxes).
+
+  **b) Expedited Shipping:**
+    - **Carrier(s):** UPS 2nd Day Air / FedEx 2Day (or similar)
+    - **Estimated Delivery:** 2-3 business days after shipment.
+    - **Cost:** Calculated at checkout based on weight and destination (Live Rates) or a flat rate (e.g., $19.95).
+
+  **c) Overnight Shipping:**
+    - **Carrier(s):** UPS Next Day Air Saver / FedEx Standard Overnight (or similar)
+    - **Estimated Delivery:** 1 business day after shipment (for orders placed before cutoff time).
+    - **Cost:** Calculated at checkout based on weight and destination (Live Rates).
+    - **Order Cutoff:** Orders must be placed by 12:00 PM EST for same-day processing and next-day delivery.
+
+**3. International Shipping:**
+- **Availability:** Offered to select countries (List: Canada, UK, Australia, etc. - maintain updated list).
+- **Carrier(s):** DHL Express / UPS Worldwide Saver / USPS International.
+- **Estimated Delivery:** Varies significantly by destination (typically 7-21 business days).
+- **Cost:** Calculated at checkout based on weight, destination, and chosen service level.
+- **Duties & Taxes:** Customers are responsible for all import duties, taxes, and brokerage fees levied by the destination country. These are *not* included in the shipping cost paid to us.
+
+**4. Order Processing & Handling Time:**
+- **Standard:** Orders are typically processed and shipped within 1-2 business days (Monday-Friday, excluding holidays).
+- **Peak Periods:** Processing times may extend to 3-4 business days during major sales events or holidays.
+- **Communication:** Customers receive a shipping confirmation email with tracking information once the order ships.
+
+**5. Shipping Restrictions:**
+- We cannot ship to P.O. Boxes for Expedited or Overnight options.
+- Certain oversized items may have shipping restrictions or surcharges.
+- We comply with all carrier restrictions regarding hazardous materials.
+
+**6. Tracking & Support:**
+- Tracking numbers are provided in the shipping confirmation email.
+- Customers can contact support (support@examplestore.com) for shipping inquiries. 

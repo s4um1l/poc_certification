@@ -3,15 +3,60 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
-from backend.app.agent import get_agent_response, agent_app
+from app.agent import get_agent_response, agent_app
 from typing import Dict, Any, List
 import json
+import logging
+from contextlib import asynccontextmanager
 
-# Create FastAPI app
+# Import RAG setup functions and the agent module using relative paths
+# since main.py is run from within the backend directory
+from data_processing import setup_vector_store
+from tools import create_query_internal_docs_tool
+from app import agent as agent_module # To access agent_module.instrumented_tools
+
+logger = logging.getLogger(__name__)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        # --- Startup ---
+        logger.info("Application startup: Initializing RAG retriever and tool...")
+        retriever = setup_vector_store()
+        if retriever:
+            agent_module.rag_retriever = retriever # Store retriever if needed elsewhere
+            rag_tool = create_query_internal_docs_tool(retriever)
+            if rag_tool:
+                logger.info(f"RAG tool '{rag_tool.name}' created successfully.")
+                # Append the raw RAG tool directly to the agent's tool list
+                # No instrumentation needed here anymore
+                agent_module.tools.append(rag_tool)
+                logger.info(f"Appended '{rag_tool.name}' to agent_module.tools. Current tools: {[t.name for t in agent_module.tools]}")
+            else:
+                logger.error("Failed to create RAG tool from retriever.")
+        else:
+            logger.error("RAG retriever initialization failed. RAG tool will not be available.")
+
+        yield
+        # --- Shutdown ---
+        logger.info("Application shutdown.")
+        # Add any cleanup logic here if needed
+
+    except Exception as e:
+        logger.critical(f"Critical error during RAG setup on application startup: {e}", exc_info=True)
+        # Depending on policy, either raise the exception to stop the app
+        # or yield to allow the app to start without the RAG tool.
+        # Raising is safer if RAG is critical.
+        # raise # Uncomment to prevent app start on critical RAG error
+        yield # Allow app to start but RAG tool might be missing
+
+
+# Create FastAPI app with lifespan manager
 app = FastAPI(
     title="AI COO Shopify Agent",
     description="An AI agent that provides insights about sales velocity and inventory levels.",
-    version="0.1.0"
+    version="0.1.0",
+    lifespan=lifespan
 )
 
 # Configure CORS
@@ -137,6 +182,8 @@ async def chat_with_agent(request: QueryRequest):
         if not request.query.strip():
             raise HTTPException(status_code=400, detail="Query cannot be empty")
         
+        # Ensure agent_module.tools is correctly populated before this call
+        # The lifespan event should handle this.
         result = get_agent_response(request.query)
         return result
     except Exception as e:

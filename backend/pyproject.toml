@@ -1,28 +1,64 @@
 [project]
-name = "ai-coo-shopify-agent-backend"
+name = "poc-certification-backend"
 version = "0.1.0"
-description = "Backend for AI COO Shopify Agent - Shopify merchant analytics"
+description = "Backend for PoC Certification"
 readme = "README.md"
-requires-python = ">=3.9"
-
-# Dependencies listed here for reference, but we'll use pip/uv install directly
+requires-python = ">=3.11,<3.13"
+# List dependencies here for standard PEP 621 compliance
 dependencies = [
-    "fastapi>=0.103.0",
-    "uvicorn[standard]>=0.23.2",
-    "python-dotenv>=1.0.0",
-    "langchain>=0.0.350",
-    "langchain-openai>=0.0.2",
-    "langchain-anthropic>=0.1.1",
-    "langchain-community>=0.0.10",
-    "langchain-core>=0.1.20",
-    "langgraph>=0.0.15",
-    "pandas>=2.1.0",
+    "langchain-openai>=0.1.17",
+    "langchain-anthropic>=0.1.17",
+    "langgraph>=0.1.5",
+    "qdrant-client>=1.10.0",
+    "langchain-huggingface>=0.0.3",
+    "fastapi>=0.111.1",
+    'uvicorn[standard]>=0.30.3', # Use quotes for extras
+    "python-dotenv>=1.0.1",
+    "pandas>=2.2.2",
+    "numpy<2.0",                     # Added NumPy version constraint
+    "langchain-community>=0.0.10",   # Added
+    "langchain-core>=0.1.20",        # Added
     "faker>=19.3.1",
     "pydantic>=2.3.0",
     "ragas>=0.0.20",
     "python-multipart>=0.0.6",
+    "typing-extensions>=4.7.0",
+    "langchain-qdrant>=0.1.0",       # Added new Qdrant package
+    "torch>=2.2.2,<2.3.0"            # Explicitly pinned torch
 ]
 
-#[build-system]
-#requires = ["hatchling"]
-#build-backend = "hatchling.build" 
+# Remove the poetry-specific dependency block
+# [tool.poetry.dependencies]
+# python = "^3.11"
+# langchain-openai = "^0.1.17"
+# langchain-anthropic = "^0.1.17"
+# langgraph = "^0.1.5"
+# qdrant-client = "^1.10.0"
+# # sentence-transformers = "^3.0.1" # Temporarily remove, let langchain-huggingface handle it
+# langchain-huggingface = "^0.0.3"  # Add the new package
+# # Add other direct dependencies discovered by uv here if needed (e.g., fastapi, uvicorn, python-dotenv, etc.)
+# fastapi = "^0.111.1"
+# uvicorn = {extras = ["standard"], version = "^0.30.3"} # Added standard extras for uvloop etc.
+# python-dotenv = "^1.0.1"
+# pandas = "^2.2.2" # For data_generator.py
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+
+# Add build system specification
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# Add setuptools configuration for package discovery
+[tool.setuptools.packages.find]
+where = ["."]  # look in the backend directory
+include = ["app*"]  # Include the 'app' package and any subpackages
+exclude = ["tests*", "data*", "logs*", "knowledge_base*"] # Exclude other directories
+
+# Optional: If using Poetry for build, you might use its config instead,
+# but uv pip install . often defaults to setuptools if build-system is present.
+# Example for Poetry (if you were using `poetry build`):
+# [tool.poetry]
+# name = "poc-certification-backend"
+# packages = [{ include = "app" }] # Tells poetry where the package code is 

@@ -1,0 +1,55 @@
+# Playbook: Flash Sales Strategy
+
+**Objective:** To drive a rapid surge in sales, clear specific inventory, acquire new customers, or re-engage existing ones through a time-limited, high-discount event.
+
+**I. Planning Phase (2-4 Weeks Prior)**
+
+  **A. Goals & KPIs:**
+    [ ] Define primary goal (e.g., revenue target, units sold of specific SKU, new customer acquisition).
+    [ ] Set specific, measurable KPIs (e.g., $X revenue, Y units, Z% conversion rate, A new customers).
+
+  **B. Offer & Product Selection:**
+    [ ] Select products/collections for the sale. Consider inventory levels, margins, and strategic goals.
+    [ ] Determine the discount structure (e.g., 30-50% off, specific price point). Ensure margins support the discount.
+    [ ] Set sale duration (typically 12-48 hours). Define exact start and end times (including timezone).
+    [ ] Decide on any purchase limits per customer (if needed).
+
+  **C. Marketing & Promotion:**
+    [ ] Develop promotional calendar (teasers, announcement, reminders, launch, final hours).
+    [ ] Create all marketing assets (email campaigns, social media posts/ads, website banners, SMS alerts).
+    [ ] Segment email lists for targeted messaging (e.g., VIPs get early access).
+    [ ] Plan paid ad strategy (channels, budget, targeting).
+    [ ] Prepare website updates (homepage banner, dedicated landing page/collection).
+
+  **D. Logistics & Technical Prep:**
+    [ ] Coordinate with inventory team: ensure sufficient stock is available and allocated.
+    [ ] Coordinate with customer support: brief team on sale details, anticipate increased volume.
+    [ ] Technical checks: ensure website/server can handle traffic spike. Test discount codes/automatic discounts thoroughly.
+    [ ] Set up tracking (UTM codes, specific analytics views).
+
+**II. Execution Phase (During Sale)**
+
+  [ ] Launch scheduled promotions (emails, social posts, ads).
+  [ ] Update website banners/homepage.
+  [ ] Monitor sales performance and website stability in real-time.
+  [ ] Monitor ad performance and adjust bids/budgets as needed.
+  [ ] Engage with customer comments/questions on social media.
+  [ ] Send reminder emails/posts (e.g., "12 hours left!").
+
+**III. Post-Sale Phase (Immediately After)**
+
+  **A. Fulfillment & Support:**
+    [ ] Disable discount codes/remove sale banners promptly at the end time.
+    [ ] Send "Sale Ended" communication (optional, can include thank you or hint at future events).
+    [ ] Fulfillment team prioritizes processing the high volume of sale orders.
+    [ ] Customer support manages post-sale inquiries.
+
+  **B. Analysis & Reporting (Within 1 Week):**
+    [ ] Compile performance report: analyze KPIs vs. goals (revenue, units sold, AOV, conversion rate, traffic sources, new vs. returning customers).
+    [ ] Analyze product performance: which items sold best?
+    [ ] Calculate profitability/ROI of the flash sale.
+    [ ] Gather customer feedback (if available).
+    [ ] Document key learnings, successes, and challenges for future flash sales.
+    [ ] Share report with relevant stakeholders.
+
+Flash sales should be short (12-48 hours), offer significant discounts (30%+), and be heavily promoted via email and social media starting 24 hours prior. 

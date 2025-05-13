@@ -1,0 +1,44 @@
+# Company Policy: Customer Discounts & Promotions
+
+**1. Overview:**
+This policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.
+
+**2. Types of Discounts:**
+
+  **a) First-Time Buyer Discount:**
+    - **Offer:** 10% off the first order.
+    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).
+    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.
+
+  **b) Loyalty Program Discounts:**
+    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).
+    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.
+    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.
+
+  **c) Promotional / Seasonal Sales:**
+    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).
+    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.
+    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).
+
+  **d) Tiered Discounts (Volume/Cart Value):**
+    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).
+    - **Mechanism:** Usually applied automatically at checkout.
+
+  **e) Abandoned Cart Recovery:**
+    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.
+    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.
+    - **Conditions:** Time-sensitive, usually single-use.
+
+**3. General Conditions & Exclusions:**
+- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).
+- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.
+- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).
+
+**4. Discount Code Management:**
+- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.
+- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).
+- **Testing:** All codes must be tested before promotion begins.
+- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.
+
+**5. Approval:**
+Major promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director. 

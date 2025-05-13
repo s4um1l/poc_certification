@@ -39,36 +39,27 @@ from .tools import (
 )
 from .tool_usage import reset_tracker, get_tool_usage, add_tool_usage
 
-# Create instrumented tool wrappers that will track usage
-def create_instrumented_tool(original_tool):
-    """Create an instrumented version of a tool that tracks usage"""
-    wrapped_tool = copy.deepcopy(original_tool)
-    original_func = wrapped_tool._run
-    
-    def instrumented_run(*args, **kwargs):
-        input_data = kwargs.copy()
-        if 'config' in input_data:
-            # Don't include config in the tracked data
-            input_data.pop('config')
-            
-        # Record the start of the tool call
-        tool_id = add_tool_usage(wrapped_tool.name, input_data)
-        try:
-            # Run the original tool with all params including config
-            result = original_func(*args, **kwargs)
-            # Update with the result
-            add_tool_usage(wrapped_tool.name, input_data, result, tool_id)
-            return result
-        except Exception as e:
-            # Log the error
-            add_tool_usage(wrapped_tool.name, input_data, {"error": str(e)}, tool_id)
-            raise
-            
-    wrapped_tool._run = instrumented_run
-    return wrapped_tool
+# Import for RAG - use relative imports as agent.py is inside 'app' which is inside 'backend'
+# and backend/ is the root for python path when uvicorn starts from backend/
+from data_processing import setup_vector_store
+from tools import create_query_internal_docs_tool
+import logging
 
-# Instrument all tools for better tracking
-instrumented_tools = [create_instrumented_tool(t) for t in [
+logger = logging.getLogger(__name__)
+
+# --- Initialize RAG Retriever and Tool (Placeholders) ---
+# These will be populated during FastAPI startup via the lifespan event
+rag_retriever = None
+query_internal_docs_tool = None # Placeholder for the RAG tool
+
+# Remove the create_instrumented_tool function entirely
+# def create_instrumented_tool(original_tool):
+#    ...
+
+# List of raw tools (decorated functions or BaseTool instances)
+# The RAG tool instance (query_internal_docs_tool) will be appended to this list
+# by the lifespan event handler in main.py after it's created.
+RAW_TOOLS: List[BaseTool] = [
     get_product_info,
     list_products,
     get_inventory_level,
@@ -76,7 +67,12 @@ instrumented_tools = [create_instrumented_tool(t) for t in [
     get_sales_data_for_product,
     estimate_days_of_stock_remaining,
     get_top_selling_products
-]]
+]
+# Filter out any None entries just in case, although tools should be defined
+RAW_TOOLS = [t for t in RAW_TOOLS if t is not None]
+
+# The global `tools` variable will be this list, modified by main.py lifespan
+tools = RAW_TOOLS
 
 # Load environment variables
 load_dotenv()
@@ -96,40 +92,69 @@ def get_llm():
 class AgentState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add]
 
-# Define the tools
-tools = instrumented_tools
+# Define the tools (using the global `tools` list populated above and by lifespan)
+# tools = instrumented_tools # No longer instrumenting
 
 # System prompt template
 SYSTEM_PROMPT = """
-You are an AI Shopping Operations Assistant for a Shopify merchant. Your job is to help the merchant understand their sales velocity and inventory levels.
+You are an AI Shopping Operations Assistant for a Shopify merchant. Your primary goal is to answer the merchant's questions accurately and efficiently.
 
-You analyze sales and inventory data to provide insights and answer operational questions.
-
-You have access to the following tools:
+You have access to specialized tools for specific data types and a general knowledge tool for policies, procedures, and other internal information.
 
 {tool_descriptions}
 
-Always follow these guidelines:
-1. Use the tools to answer questions accurately. Don't make up information.
-2. If you need specific product IDs or time periods that weren't provided, ask for clarification.
-3. Be precise and concise in your responses.
-4. Format numbers clearly (e.g., use $ for dollar amounts, % for percentages).
-5. Provide actionable insights where possible (e.g., note if inventory is critically low).
+## Tool Usage and Answering Protocol:
 
-Important: You must use tools to retrieve data before answering questions about inventory or sales.
+**1. Understand the Query Type:**
+   - **Is it a request for specific, structured data?** (e.g., "What is the stock level for product X?", "Show me sales data for product Y.")
+     - If YES, and it EXACTLY MATCHES one of the following, use the specific tool:
+       - `get_product_info`: For specific product details by ID.
+       - `list_products`: To see all available products.
+       - `get_inventory_level`: For current stock levels by product ID.
+       - `list_low_stock_products`: For products that need reordering.
+       - `get_sales_data_for_product`: For historical sales data by product ID.
+       - `estimate_days_of_stock_remaining`: To predict when items will run out.
+       - `get_top_selling_products`: For bestseller analysis.
+   - **Is it any other type of question?** (e.g., "How do I process a return?", "What is our policy on X?", "Explain concept Y.", or any query where you are uncertain).
+     - If YES, **you MUST use the `query_internal_documents` tool.** This is your primary tool for all questions not covered by the highly specific data tools listed above.
+
+**2. Tool Invocation and Response Generation:**
+   - After invoking a tool, review the information received.
+   - **If the information is sufficient to answer the user's question, formulate and provide the answer directly. Do NOT call another tool unless absolutely necessary to fulfill the original request.**
+   - If the initial tool call (especially from `query_internal_documents`) does not provide a complete answer, you may re-phrase your query and try the *same* tool again if you believe more relevant information can be found within that tool's scope. Avoid rapidly switching between different tools for the same core question if the RAG tool is appropriate.
+
+**3. Important Guidelines:**
+   - **Prioritize `query_internal_documents`**: For any ambiguity or for questions about processes, policies, how-to guides, FAQs, or general knowledge, your FIRST and primary choice should be `query_internal_documents`.
+   - **Accuracy is Key**: Always use tools to retrieve information. Do not invent answers.
+   - **Clarify if Necessary**: If a specific data tool requires an ID (e.g., product ID) and it wasn't provided, ask for clarification *before* attempting to use the tool.
+   - **Be Concise**: Provide clear and direct answers.
+   - **Formatting**: Use $ for dollar amounts, % for percentages.
+
+**Example Decision Flow:**
+   - User asks: "What is the return policy for damaged goods?"
+     - Agent identifies this as a policy question.
+     - Agent Action: Call `query_internal_documents` with the query "return policy for damaged goods".
+     - Agent Action: Formulate answer based on retrieved documents.
+
+   - User asks: "How many units of 'Blue Widget' (ID: 123) do we have?"
+     - Agent identifies this as a specific inventory query.
+     - Agent Action: Call `get_inventory_level` with product ID 123.
+     - Agent Action: Formulate answer based on tool output.
+
+By following this protocol, you will efficiently use the available tools and provide accurate answers. If you find yourself calling multiple different tools for a single, simple query, re-evaluate if `query_internal_documents` should have been your primary choice.
 """
 
 # Define the chatbot function using LLM with tools
 def chatbot(state: AgentState):
     """Process the messages using the LLM"""
-    # Get the LLM
     llm = get_llm()
-    
-    # Bind the tools to the LLM
+    # Bind the raw tools (populated globally) to the LLM
+    # Ensure the global `tools` list is up-to-date (includes RAG tool from lifespan)
     llm_with_tools = llm.bind_tools(tools)
-    
+
     # Create prompt template with system message
-    tool_descriptions = "\n".join([f"- {tool.name}: {tool.description}" for tool in tools])
+    # Use the current state of the global `tools` list for descriptions
+    tool_descriptions = "\n".join([f"- {tool.name}: {tool.description}" for tool in tools if tool is not None])
     messages = state["messages"]
     
     # Use a system message and the history
@@ -149,15 +174,14 @@ def chatbot(state: AgentState):
 # Fix the graph creation to handle config parameter
 def create_graph():
     """Create and configure the agent graph"""
-    # Define the workflow
     graph = StateGraph(AgentState)
-    
+
     # Create a custom tool execution node that handles the config parameter
+    # and performs tracking directly.
     def custom_tool_node(state):
-        # Extract the latest AI message to get the tool calls
         if "messages" not in state or not state["messages"]:
             return {"messages": []}
-            
+
         ai_message = None
         for message in reversed(state["messages"]):
             if isinstance(message, AIMessage) and hasattr(message, "tool_calls") and message.tool_calls:
@@ -165,90 +189,90 @@ def create_graph():
                 break
         
         if not ai_message or not hasattr(ai_message, "tool_calls") or not ai_message.tool_calls:
+            # This can happen if the LLM decides not to call a tool, or if the state is malformed.
+            # Returning an empty list of messages is usually appropriate here.
+            logger.info("No tool calls found in the latest AI message.")
             return {"messages": []}
-        
+
         result_messages = []
-        for tool_call in ai_message.tool_calls:
-            try:
-                # Get the tool by name
-                tool_name = tool_call.name if hasattr(tool_call, "name") else tool_call.get("name")
-                tool_args = tool_call.args if hasattr(tool_call, "args") else tool_call.get("args", {})
-                
-                # Add the config parameter
-                tool_args["config"] = {}
-                
-                # Find the matching tool
-                matching_tool = None
-                for tool in tools:
-                    if tool.name == tool_name:
-                        matching_tool = tool
-                        break
-                
-                if not matching_tool:
-                    error_msg = f"Tool {tool_name} not found"
-                    # Create tool message with a valid tool_call_id
-                    # Ensure we're getting a proper tool_call_id by checking various attributes
-                    tool_call_id = None
-                    if hasattr(tool_call, "id"):
-                        tool_call_id = tool_call.id
-                    elif isinstance(tool_call, dict) and "id" in tool_call:
-                        tool_call_id = tool_call["id"]
-                    # If we can't find an id, generate a new UUID
-                    if not tool_call_id:
-                        tool_call_id = str(uuid.uuid4())
-                        
-                    result_messages.append(
-                        ToolMessage(content=f"Error: {error_msg}", tool_call_id=tool_call_id)
-                    )
-                    continue
-                
-                # Execute the tool with config
-                try:
-                    result = matching_tool.invoke(tool_args)
-                except AttributeError:
-                    # Fall back to older __call__ method if invoke is not available
-                    result = matching_tool(**tool_args)
-                
-                # Create a result message with a valid tool_call_id
-                # Ensure we're getting a proper tool_call_id by checking various attributes
-                tool_call_id = None
-                if hasattr(tool_call, "id"):
-                    tool_call_id = tool_call.id
-                elif isinstance(tool_call, dict) and "id" in tool_call:
-                    tool_call_id = tool_call["id"]
-                # If we can't find an id, generate a new UUID
-                if not tool_call_id:
-                    tool_call_id = str(uuid.uuid4())
-                    
+        for tool_call in ai_message.tool_calls: # ai_message.tool_calls is a list of ToolCall objects/dicts
+            # Ensure we get the tool_call_id directly from the LLM's tool_call object/dict
+            tool_call_id = tool_call.get('id') if isinstance(tool_call, dict) else getattr(tool_call, 'id', None)
+            if not tool_call_id:
+                # This should ideally not happen if the LLM is forming tool calls correctly.
+                logger.error("Tool call from LLM is missing an ID. Generating a new one, but this may cause issues.")
+                tool_call_id = str(uuid.uuid4())
+
+            tool_name = tool_call.get('name') if isinstance(tool_call, dict) else getattr(tool_call, 'name', None)
+            tool_args = tool_call.get('args') if isinstance(tool_call, dict) else getattr(tool_call, 'args', {})
+
+            if not tool_name:
+                logger.error(f"Tool call is missing a name. ID: {tool_call_id}")
                 result_messages.append(
-                    ToolMessage(content=json.dumps(result), tool_call_id=tool_call_id)
+                    ToolMessage(content=f"Error: Tool call missing name.", tool_call_id=tool_call_id)
                 )
-                
-            except Exception as e:
-                # Handle errors
-                error_msg = f"Error executing tool {tool_call.name if hasattr(tool_call, 'name') else 'unknown'}: {str(e)}"
-                # Create tool message with a valid tool_call_id
-                # Ensure we're getting a proper tool_call_id by checking various attributes
-                tool_call_id = None
-                if hasattr(tool_call, "id"):
-                    tool_call_id = tool_call.id
-                elif isinstance(tool_call, dict) and "id" in tool_call:
-                    tool_call_id = tool_call["id"]
-                # If we can't find an id, generate a new UUID
-                if not tool_call_id:
-                    tool_call_id = str(uuid.uuid4())
-                    
+                continue
+
+            # Find the original tool from the global `tools` list
+            matching_tool = None
+            for t in tools: # Use the global `tools` list
+                if t and t.name == tool_name:
+                    matching_tool = t
+                    break
+
+            if not matching_tool:
+                error_msg = f"Tool '{tool_name}' not found."
+                logger.error(error_msg)
                 result_messages.append(
                     ToolMessage(content=f"Error: {error_msg}", tool_call_id=tool_call_id)
                 )
-        
+                continue
+
+            # Start tracking
+            logger.info(f"Executing tool '{tool_name}' (ID: {tool_call_id}) with args: {tool_args}")
+            tool_tracking_id = add_tool_usage(tool_name, tool_args)
+
+            try:
+                # --> Add specific logging for RAG tool input <--
+                if tool_name == "query_internal_documents":
+                    query_text = tool_args.get('query', '[Query not found in args]')
+                    logger.info(f"<<< RAG TOOL CALL >>> Querying retriever with: '{query_text}'")
+
+                result = matching_tool.invoke(tool_args)
+
+                # --> Add specific logging for RAG tool output <--
+                if tool_name == "query_internal_documents":
+                    # Log the raw result (which should be a list of Documents)
+                    logger.info(f"<<< RAG TOOL RAW RESULT >>> Retriever returned: {result}")
+                    # Also log the number of documents returned
+                    num_docs = len(result) if isinstance(result, list) else "N/A (Result not a list)"
+                    logger.info(f"<<< RAG TOOL RAW RESULT >>> Number of documents: {num_docs}")
+
+                logger.info(f"Tool '{tool_name}' (ID: {tool_call_id}) completed successfully.")
+                add_tool_usage(tool_name, tool_args, result, tool_tracking_id) # Update tracking with result
+                try:
+                    result_content = json.dumps(result)
+                except TypeError:
+                    logger.warning(f"Result from tool '{tool_name}' (ID: {tool_call_id}) is not JSON serializable. Converting to string.")
+                    result_content = str(result)
+
+            except Exception as e:
+                logger.error(f"Error executing tool '{tool_name}' (ID: {tool_call_id}): {e}", exc_info=True)
+                error_msg = f"Error: Tool '{tool_name}' failed with: {e}"
+                add_tool_usage(tool_name, tool_args, {"error": str(e)}, tool_tracking_id) # Update tracking with error
+                result_content = error_msg
+
+            result_messages.append(
+                ToolMessage(content=result_content, tool_call_id=tool_call_id) # Crucially, use the original tool_call_id from the LLM
+            )
+
         return {"messages": result_messages}
-    
+
     # Define the nodes in the graph
     graph.add_node("chatbot", chatbot)
     graph.add_node("tools", custom_tool_node)
-    
-    # Connect the nodes - modified for custom tool node
+
+    # Connect the nodes
     graph.add_conditional_edges(
         "chatbot",
         lambda x: "tools" if any(
@@ -260,10 +284,9 @@ def create_graph():
     
     # Set the entry point
     graph.set_entry_point("chatbot")
-    
+
     # Compile the graph
     app = graph.compile()
-    
     return app
 
 # Create the agent application
@@ -380,6 +403,5 @@ def get_agent_response(query: str) -> Dict[str, Any]:
             "trace_data": None
         }
 
-# At the end of the file, after all definitions, re-create the agent app
-# Create the agent application
-agent_app = create_graph()  # Re-create with our updated implementation 
+# At the end of the file, re-create the agent app to ensure it uses the latest definitions
+agent_app = create_graph() 

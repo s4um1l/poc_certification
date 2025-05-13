@@ -1,0 +1,49 @@
+# Standard Operating Procedure: Inventory Restocking
+
+**Objective:** To maintain optimal stock levels, prevent stockouts, and ensure efficient inventory turnover.
+
+**Frequency:** Daily checks, Weekly comprehensive review.
+
+**Responsible Roles:** Inventory Manager, Warehouse Team
+
+**Procedure:**
+
+**1. Daily Stock Level Monitoring (Inventory Manager):**
+   - **Time:** Beginning of each business day.
+   - **Action:** Review inventory levels in the Inventory Management System (IMS - e.g., Shopify Admin, Skulabs, etc.).
+   - **Focus:** Identify SKUs approaching or below pre-defined minimum stock thresholds (par levels).
+   - **Tool:** IMS dashboard, low stock reports.
+
+**2. Purchase Order (PO) Creation (Inventory Manager):**
+   - **Trigger:** When SKUs hit or fall below minimum thresholds.
+   - **Action:** 
+     - Determine required reorder quantity based on lead time, sales velocity, and safety stock levels.
+     - Select appropriate supplier based on existing agreements, pricing, and lead times.
+     - Create a formal Purchase Order in the IMS or accounting system (e.g., QuickBooks, Xero) detailing SKUs, quantities, agreed prices, and delivery requirements.
+     - Obtain necessary approval (if required based on PO value).
+   - **Output:** Approved PO sent to the supplier.
+
+**3. Shipment Receiving (Warehouse Team):**
+   - **Trigger:** Arrival of shipment from supplier.
+   - **Action:**
+     - Verify received goods against the corresponding PO and packing slip (check SKU, quantity, condition).
+     - Note any discrepancies (shortages, damages, incorrect items) immediately on the receiving documents.
+     - Sign receiving documents.
+   - **Documentation:** Signed packing slip, internal receiving report.
+
+**4. Discrepancy Reporting (Warehouse Team -> Inventory Manager):**
+   - **Action:** Report any receiving discrepancies to the Inventory Manager within 4 hours of receipt.
+   - **Process:** Provide details of the discrepancy and supporting documentation/photos.
+   - **Follow-up (Inventory Manager):** Contact supplier to resolve discrepancies (e.g., request replacements, credit notes).
+
+**5. Inventory Count Update (Warehouse Team / Inventory Manager):**
+   - **Action:** Update inventory counts in the IMS accurately reflect the received quantities (minus any damaged/rejected items) within 1 business day of receiving.
+   - **Importance:** Crucial for maintaining accurate stock levels for sales channels.
+
+**6. Stock Putaway (Warehouse Team):**
+   - **Action:** Store received items in their designated warehouse locations.
+   - **System:** Update bin locations in the IMS if applicable.
+
+**7. Weekly Review (Inventory Manager):**
+   - **Action:** Conduct a comprehensive review of inventory levels, sales velocity, lead times, and par levels.
+   - **Goal:** Adjust minimum thresholds and reorder points as needed based on recent performance and upcoming forecasts/promotions. 
