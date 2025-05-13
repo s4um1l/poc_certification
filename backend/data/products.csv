@@ -1,51 +1,101 @@
 product_id,name,category,price,cost,created_at
-P890,Down-sized static benchmark,Home Goods,23.71,7.94,2024-12-31
-P801,Visionary demand-driven framework,Apparel,84.22,8.87,2024-06-27
-P400,Cloned coherent collaboration,Home Goods,92.91,9.52,2024-06-09
-P380,Down-sized neutral definition,Accessories,4.31,3.35,2024-08-17
-P756,Front-line 24hour alliance,Home Goods,33.56,0.74,2025-01-29
-P451,Phased clear-thinking projection,Electronics,50.67,0.64,2024-08-03
-P977,Visionary logistical ability,Home Goods,61.63,2.73,2025-03-26
-P996,Vision-oriented asymmetric portal,Beauty,48.1,4.16,2025-02-12
-P735,Focused user-facing database,Apparel,74.18,1.5,2025-02-27
-P641,Public-key explicit monitoring,Home Goods,71.45,9.43,2024-10-27
-P679,Distributed national productivity,Electronics,14.99,8.01,2024-05-17
-P863,Multi-channeled tertiary support,Apparel,74.75,6.83,2025-04-09
-P774,Pre-emptive user-facing middleware,Electronics,81.02,4.36,2024-11-21
-P895,Right-sized analyzing knowledge user,Apparel,25.56,3.66,2025-03-03
-P348,Customizable multi-tasking solution,Accessories,20.09,3.32,2025-01-01
-P656,Future-proofed encompassing functionalities,Apparel,75.85,4.07,2025-04-14
-P707,Digitized content-based challenge,Electronics,46.51,9.75,2024-06-11
-P971,Stand-alone dynamic hub,Accessories,1.79,1.38,2024-07-13
-P629,Ergonomic homogeneous alliance,Apparel,63.06,1.52,2024-06-20
-P462,Multi-layered incremental ability,Apparel,48.42,3.13,2024-08-10
-P644,Organized cohesive workforce,Accessories,81.82,7.61,2024-06-11
-P369,Ameliorated mobile collaboration,Electronics,15.35,3.2,2024-12-16
-P362,Progressive tertiary hierarchy,Home Goods,18.08,1.11,2024-08-12
-P720,Stand-alone web-enabled neural-net,Accessories,79.36,0.81,2024-10-20
-P200,Front-line grid-enabled interface,Electronics,85.36,4.9,2024-12-28
-P816,Customer-focused context-sensitive extranet,Apparel,60.63,4.84,2024-07-25
-P376,Expanded content-based productivity,Apparel,45.06,4.86,2024-05-24
-P489,Balanced maximized strategy,Electronics,95.66,8.0,2024-07-30
-P804,Managed homogeneous matrices,Home Goods,32.67,2.5,2024-08-23
-P118,Secured transitional database,Home Goods,45.51,0.18,2024-12-04
-P155,Automated motivating process improvement,Home Goods,43.27,5.4,2025-03-16
-P891,Exclusive 6thgeneration approach,Electronics,73.07,4.35,2024-12-30
-P712,Decentralized tangible application,Beauty,68.0,0.43,2024-10-08
-P783,Fully-configurable executive encoding,Accessories,88.71,3.1,2024-10-29
-P604,Assimilated bottom-line ability,Electronics,54.38,9.04,2024-07-04
-P522,Function-based bifurcated knowledge user,Electronics,77.75,4.7,2024-06-26
-P452,Managed 3rdgeneration extranet,Beauty,68.63,5.62,2025-02-06
-P807,Devolved non-volatile moratorium,Home Goods,87.2,1.97,2024-08-20
-P439,Monitored web-enabled infrastructure,Electronics,15.45,9.31,2024-12-06
-P745,Future-proofed content-based policy,Accessories,24.76,5.55,2025-02-07
-P631,Switchable interactive hardware,Electronics,61.79,9.44,2024-12-06
-P666,Multi-channeled web-enabled flexibility,Apparel,23.54,9.98,2025-03-14
-P646,Organic cohesive orchestration,Home Goods,29.88,1.09,2025-03-06
-P250,Open-source analyzing parallelism,Beauty,48.1,8.37,2024-08-28
-P206,Monitored optimizing time-frame,Apparel,44.01,1.03,2024-10-13
-P542,Self-enabling methodical software,Home Goods,51.63,5.91,2025-02-14
-P606,Profit-focused logistical toolset,Home Goods,13.36,3.18,2025-04-07
-P596,Mandatory eco-centric process improvement,Electronics,64.1,4.07,2025-03-14
-P875,Virtual reciprocal website,Accessories,69.62,2.61,2025-01-12
-P302,Cloned uniform infrastructure,Home Goods,96.08,5.5,2024-12-24
+P301,Future-proofed encompassing functionalities,Electronics,76.74,3.2,2025-03-02
+P302,Future-proofed encompassing functionalities,Office Supplies,17.82,4.8,2025-04-27
+P303,Future-proofed encompassing functionalities,Apparel,30.94,6.42,2024-07-29
+P304,Switchable interactive hardware,Office Supplies,47.76,5.04,2024-12-21
+P305,Virtual reciprocal website,Apparel,72.83,4.06,2025-02-22
+P306,Switchable interactive hardware,Home Goods,19.2,4.42,2024-11-10
+P307,Public-key explicit monitoring,Office Supplies,33.81,1.39,2024-09-19
+P308,Profit-focused composite paradigm,Electronics,97.58,4.41,2024-08-03
+P309,Organic cohesive orchestration,Office Supplies,89.69,4.25,2025-02-03
+P310,Future-proofed encompassing functionalities,Electronics,69.51,7.96,2025-04-02
+P311,Switchable interactive hardware,Electronics,44.21,5.08,2024-11-07
+P312,Progressive tertiary hierarchy,Home Goods,41.97,7.03,2024-05-18
+P313,Future-proofed encompassing functionalities,Office Supplies,67.15,5.81,2025-01-07
+P314,Progressive tertiary hierarchy,Accessories,44.15,9.91,2024-06-19
+P315,Profit-focused composite paradigm,Apparel,71.62,8.59,2025-04-14
+P316,Switchable interactive hardware,Electronics,82.45,4.61,2025-04-09
+P317,Switchable interactive hardware,Office Supplies,88.87,3.83,2024-06-11
+P318,Cross-platform object-oriented concept,Accessories,89.62,6.79,2025-02-28
+P319,Organic cohesive orchestration,Apparel,32.2,6.05,2024-12-29
+P320,Open-source intangible info-mediaries,Accessories,90.8,4.59,2025-01-20
+P321,Progressive tertiary hierarchy,Office Supplies,54.42,7.8,2025-03-17
+P322,Progressive tertiary hierarchy,Apparel,81.29,4.8,2025-04-10
+P323,Advanced incremental timeframe,Accessories,63.63,5.21,2025-01-04
+P324,Profit-focused composite paradigm,Electronics,71.23,2.03,2024-08-11
+P325,Organic cohesive orchestration,Home Goods,20.04,4.91,2024-09-22
+P326,Virtual reciprocal website,Home Goods,97.47,7.86,2024-08-26
+P327,Future-proofed encompassing functionalities,Home Goods,85.75,5.57,2025-01-31
+P328,Progressive tertiary hierarchy,Home Goods,78.63,5.85,2024-08-14
+P329,Virtual reciprocal website,Office Supplies,39.17,1.18,2024-11-08
+P330,Organic cohesive orchestration,Apparel,15.21,8.9,2025-04-02
+P331,Future-proofed encompassing functionalities,Accessories,83.44,9.8,2024-08-13
+P332,Progressive tertiary hierarchy,Apparel,69.38,9.52,2025-02-17
+P333,Organic cohesive orchestration,Office Supplies,88.52,4.81,2025-01-24
+P334,Profit-focused composite paradigm,Apparel,74.17,4.59,2024-06-03
+P335,Public-key explicit monitoring,Accessories,90.97,5.06,2025-01-06
+P336,Switchable interactive hardware,Electronics,40.43,6.29,2025-01-15
+P337,Open-source intangible info-mediaries,Apparel,10.65,7.37,2025-04-12
+P338,Switchable interactive hardware,Electronics,91.49,8.74,2025-04-06
+P339,Profit-focused composite paradigm,Apparel,35.06,5.37,2024-08-09
+P340,Progressive tertiary hierarchy,Office Supplies,61.86,3.19,2024-09-12
+P341,Advanced incremental timeframe,Apparel,18.49,6.93,2024-11-12
+P342,Advanced incremental timeframe,Accessories,52.03,7.56,2024-06-02
+P343,Future-proofed encompassing functionalities,Electronics,46.24,4.05,2025-03-18
+P344,Switchable interactive hardware,Apparel,27.12,5.04,2024-10-08
+P345,Progressive tertiary hierarchy,Home Goods,51.64,8.87,2025-04-04
+P346,Cross-platform object-oriented concept,Office Supplies,18.81,6.87,2024-08-09
+P347,Virtual reciprocal website,Electronics,93.37,8.64,2025-02-16
+P348,Advanced incremental timeframe,Accessories,53.32,8.78,2025-04-12
+P349,Progressive tertiary hierarchy,Accessories,10.19,4.51,2024-09-22
+P350,Organic cohesive orchestration,Accessories,72.69,7.57,2024-08-01
+P351,Cross-platform object-oriented concept,Apparel,27.09,2.96,2025-04-13
+P352,Open-source intangible info-mediaries,Office Supplies,15.49,3.82,2025-04-17
+P353,Open-source intangible info-mediaries,Accessories,55.26,8.67,2025-02-21
+P354,Virtual reciprocal website,Office Supplies,17.21,2.67,2024-07-12
+P355,Future-proofed encompassing functionalities,Apparel,46.34,9.47,2024-07-25
+P356,Switchable interactive hardware,Office Supplies,63.51,6.57,2024-10-10
+P357,Open-source intangible info-mediaries,Office Supplies,57.05,9.41,2025-01-28
+P358,Public-key explicit monitoring,Apparel,33.91,2.18,2024-06-16
+P359,Organic cohesive orchestration,Accessories,38.46,7.77,2025-04-05
+P360,Virtual reciprocal website,Accessories,65.9,6.07,2025-03-22
+P361,Future-proofed encompassing functionalities,Office Supplies,29.18,3.39,2024-11-15
+P362,Future-proofed encompassing functionalities,Apparel,43.26,2.42,2024-08-07
+P363,Organic cohesive orchestration,Office Supplies,98.55,8.26,2024-08-15
+P364,Virtual reciprocal website,Office Supplies,36.94,6.97,2025-03-05
+P365,Organic cohesive orchestration,Electronics,90.07,7.68,2025-02-22
+P366,Organic cohesive orchestration,Home Goods,64.43,7.46,2025-01-28
+P367,Organic cohesive orchestration,Office Supplies,53.97,9.15,2025-04-16
+P368,Future-proofed encompassing functionalities,Accessories,84.64,1.4,2024-11-23
+P369,Progressive tertiary hierarchy,Home Goods,24.54,4.98,2024-05-16
+P370,Advanced incremental timeframe,Office Supplies,10.87,1.68,2024-05-24
+P371,Progressive tertiary hierarchy,Office Supplies,13.24,4.32,2024-08-03
+P372,Progressive tertiary hierarchy,Accessories,21.47,3.77,2025-04-22
+P373,Public-key explicit monitoring,Apparel,71.39,7.0,2024-11-12
+P374,Profit-focused composite paradigm,Accessories,97.65,7.75,2025-01-11
+P375,Progressive tertiary hierarchy,Apparel,89.33,1.22,2024-11-23
+P376,Advanced incremental timeframe,Apparel,34.01,8.09,2025-03-18
+P377,Advanced incremental timeframe,Electronics,87.27,3.0,2024-09-19
+P378,Public-key explicit monitoring,Home Goods,83.85,8.84,2025-01-18
+P379,Virtual reciprocal website,Apparel,45.86,3.51,2025-04-07
+P380,Organic cohesive orchestration,Home Goods,67.73,4.6,2024-08-11
+P381,Public-key explicit monitoring,Electronics,20.38,9.73,2025-02-10
+P382,Open-source intangible info-mediaries,Home Goods,13.44,6.37,2024-11-17
+P383,Public-key explicit monitoring,Accessories,64.56,5.6,2024-10-27
+P384,Open-source intangible info-mediaries,Apparel,32.93,7.38,2025-05-12
+P385,Profit-focused composite paradigm,Office Supplies,71.82,9.46,2024-06-03
+P386,Switchable interactive hardware,Home Goods,48.82,9.54,2024-11-24
+P387,Open-source intangible info-mediaries,Home Goods,69.7,2.12,2024-12-10
+P388,Profit-focused composite paradigm,Home Goods,70.02,3.94,2024-05-21
+P389,Organic cohesive orchestration,Office Supplies,21.46,4.78,2024-10-30
+P390,Progressive tertiary hierarchy,Office Supplies,61.22,4.65,2025-05-12
+P391,Organic cohesive orchestration,Home Goods,28.92,8.07,2024-07-06
+P392,Public-key explicit monitoring,Accessories,49.76,7.08,2024-08-24
+P393,Cross-platform object-oriented concept,Apparel,69.3,3.55,2024-06-07
+P394,Open-source intangible info-mediaries,Home Goods,18.4,9.57,2025-01-12
+P395,Organic cohesive orchestration,Apparel,82.59,2.33,2025-04-19
+P396,Switchable interactive hardware,Accessories,65.01,7.92,2024-09-21
+P397,Advanced incremental timeframe,Office Supplies,27.5,7.27,2024-09-01
+P398,Advanced incremental timeframe,Apparel,23.28,7.19,2025-03-19
+P399,Advanced incremental timeframe,Apparel,25.83,9.62,2024-08-20
+P400,Cross-platform object-oriented concept,Electronics,60.17,9.26,2025-03-11

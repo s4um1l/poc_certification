@@ -4,18 +4,22 @@ from langchain_core.tools import tool
 import os
 from typing import List, Dict, Optional, Union, Any
 
+from .tool_logger import tool_logger
+
 # Path to data files
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
 def _load_data(file_name: str) -> pd.DataFrame:
     """Helper function to load CSV data"""
     file_path = os.path.join(DATA_DIR, file_name)
+    print(f"Loading data from {file_path}")
     if not os.path.exists(file_path):
+        print(f"WARNING: Data file {file_path} not found!")
         raise FileNotFoundError(f"Data file {file_path} not found. Make sure to run data_generator.py first.")
     return pd.read_csv(file_path)
 
-@tool
-def get_product_info(product_id: str) -> Dict[str, Any]:
+# Original raw functions without decorators for direct use in agent.py
+def _get_product_info(product_id: str) -> Dict[str, Any]:
     """
     Get information about a specific product by its product_id.
     
@@ -33,8 +37,7 @@ def get_product_info(product_id: str) -> Dict[str, Any]:
     
     return product.iloc[0].to_dict()
 
-@tool
-def list_products(category: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
+def _list_products(category: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
     """
     List products, optionally filtered by category.
     
@@ -54,8 +57,7 @@ def list_products(category: Optional[str] = None, limit: int = 10) -> List[Dict[
     
     return filtered_df.head(limit).to_dict('records')
 
-@tool
-def get_inventory_level(product_id: str) -> Dict[str, Any]:
+def _get_inventory_level(product_id: str) -> Dict[str, Any]:
     """
     Get current inventory level for a specific product.
     
@@ -73,8 +75,7 @@ def get_inventory_level(product_id: str) -> Dict[str, Any]:
     
     return inventory.iloc[0].to_dict()
 
-@tool
-def list_low_stock_products(threshold: int = 10) -> List[Dict[str, Any]]:
+def _list_low_stock_products(threshold: int = 10) -> List[Dict[str, Any]]:
     """
     List all products with inventory levels below the specified threshold.
     
@@ -97,8 +98,7 @@ def list_low_stock_products(threshold: int = 10) -> List[Dict[str, Any]]:
     result = pd.merge(low_stock, products_df, on='product_id')
     return result.to_dict('records')
 
-@tool
-def get_sales_data_for_product(product_id: str, days: int = 30) -> Dict[str, Any]:
+def _get_sales_data_for_product(product_id: str, days: int = 30) -> Dict[str, Any]:
     """
     Get sales data for a specific product over the specified number of days.
     
@@ -147,8 +147,7 @@ def get_sales_data_for_product(product_id: str, days: int = 30) -> Dict[str, Any
         "num_orders": len(sales)
     }
 
-@tool
-def estimate_days_of_stock_remaining(product_id: str, days_to_analyze: int = 30) -> Dict[str, Any]:
+def _estimate_days_of_stock_remaining(product_id: str, days_to_analyze: int = 30) -> Dict[str, Any]:
     """
     Estimate how many days of stock remain for a product based on recent sales velocity.
     
@@ -160,14 +159,14 @@ def estimate_days_of_stock_remaining(product_id: str, days_to_analyze: int = 30)
         Dictionary with stock projection information
     """
     # Get current inventory
-    inventory_data = get_inventory_level(product_id)
+    inventory_data = _get_inventory_level(product_id)
     if "error" in inventory_data:
         return inventory_data
     
     current_stock = inventory_data['quantity']
     
     # Get sales velocity
-    sales_data = get_sales_data_for_product(product_id, days=days_to_analyze)
+    sales_data = _get_sales_data_for_product(product_id, days=days_to_analyze)
     if "error" in sales_data:
         return {"error": sales_data["error"]}
     
@@ -211,8 +210,7 @@ def estimate_days_of_stock_remaining(product_id: str, days_to_analyze: int = 30)
         "stock_status": stock_status
     }
 
-@tool
-def get_top_selling_products(days: int = 30, limit: int = 5) -> List[Dict[str, Any]]:
+def _get_top_selling_products(days: int = 30, limit: int = 5) -> List[Dict[str, Any]]:
     """
     Get the top selling products by quantity over the specified time period.
     
@@ -223,36 +221,150 @@ def get_top_selling_products(days: int = 30, limit: int = 5) -> List[Dict[str, A
     Returns:
         List of dictionaries with top selling products and their sales data
     """
-    orders_df = _load_data("orders.csv")
-    order_items_df = _load_data("order_items.csv")
-    products_df = _load_data("products.csv")
+    try:
+        orders_df = _load_data("orders.csv")
+        order_items_df = _load_data("order_items.csv")
+        products_df = _load_data("products.csv")
+        
+        # Calculate the date threshold
+        today = datetime.now()
+        date_threshold = (today - timedelta(days=days)).strftime('%Y-%m-%d')
+        
+        # Filter orders by date
+        recent_orders = orders_df[orders_df['order_date'] >= date_threshold]
+        
+        if recent_orders.empty:
+            return []
+        
+        # Join order items with recent orders
+        sales = pd.merge(order_items_df, recent_orders, on='order_id')
+        
+        if sales.empty:
+            return []
+        
+        # Group by product and sum quantities
+        product_sales = sales.groupby('product_id').agg({
+            'quantity': 'sum',
+            'item_total': 'sum'
+        }).reset_index()
+        
+        # Sort by quantity sold, descending
+        top_products = product_sales.sort_values('quantity', ascending=False).head(limit)
+        
+        # Join with product info
+        result = pd.merge(top_products, products_df, on='product_id')
+        
+        return result.to_dict('records')
+    except Exception as e:
+        # Return error information instead of raising exception
+        return [{"error": f"Error fetching top products: {str(e)}"}]
+
+# Update the tool decorators to handle config correctly
+@tool
+@tool_logger
+def get_product_info(product_id: str, config: Dict[str, Any] = None) -> Dict[str, Any]:
+    """
+    Get information about a specific product by its product_id.
     
-    # Calculate the date threshold
-    today = datetime.now()
-    date_threshold = (today - timedelta(days=days)).strftime('%Y-%m-%d')
+    Args:
+        product_id: The product ID to look up (e.g., 'P123')
+        config: Optional configuration for the tool
+        
+    Returns:
+        Dictionary with product information
+    """
+    return _get_product_info(product_id)
+
+@tool
+@tool_logger
+def list_products(category: Optional[str] = None, limit: int = 10, config: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+    """
+    List products, optionally filtered by category.
     
-    # Filter orders by date
-    recent_orders = orders_df[orders_df['order_date'] >= date_threshold]
+    Args:
+        category: Optional category to filter by (e.g., 'Apparel', 'Electronics')
+        limit: Maximum number of products to return (default: 10)
+        config: Optional configuration for the tool
+        
+    Returns:
+        List of product dictionaries
+    """
+    return _list_products(category, limit)
+
+@tool
+@tool_logger
+def get_inventory_level(product_id: str, config: Dict[str, Any] = None) -> Dict[str, Any]:
+    """
+    Get current inventory level for a specific product.
     
-    if recent_orders.empty:
-        return []
+    Args:
+        product_id: The product ID to look up (e.g., 'P123')
+        config: Optional configuration for the tool
+        
+    Returns:
+        Dictionary with inventory information
+    """
+    return _get_inventory_level(product_id)
+
+@tool
+@tool_logger
+def list_low_stock_products(threshold: int = 10, config: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+    """
+    List all products with inventory levels below the specified threshold.
     
-    # Join order items with recent orders
-    sales = pd.merge(order_items_df, recent_orders, on='order_id')
+    Args:
+        threshold: Inventory quantity threshold (default: 10)
+        config: Optional configuration for the tool
+        
+    Returns:
+        List of product dictionaries with low inventory
+    """
+    return _list_low_stock_products(threshold)
+
+@tool
+@tool_logger
+def get_sales_data_for_product(product_id: str, days: int = 30, config: Dict[str, Any] = None) -> Dict[str, Any]:
+    """
+    Get sales data for a specific product over the specified number of days.
     
-    if sales.empty:
-        return []
+    Args:
+        product_id: The product ID to look up (e.g., 'P123')
+        days: Number of days to look back (default: 30)
+        config: Optional configuration for the tool
+        
+    Returns:
+        Dictionary with sales information
+    """
+    return _get_sales_data_for_product(product_id, days)
+
+@tool
+@tool_logger
+def estimate_days_of_stock_remaining(product_id: str, days_to_analyze: int = 30, config: Dict[str, Any] = None) -> Dict[str, Any]:
+    """
+    Estimate how many days of stock remain for a product based on recent sales velocity.
     
-    # Group by product and sum quantities
-    product_sales = sales.groupby('product_id').agg({
-        'quantity': 'sum',
-        'item_total': 'sum'
-    }).reset_index()
+    Args:
+        product_id: The product ID to analyze (e.g., 'P123')
+        days_to_analyze: Number of days to analyze for sales velocity (default: 30)
+        config: Optional configuration for the tool
+        
+    Returns:
+        Dictionary with stock projection information
+    """
+    return _estimate_days_of_stock_remaining(product_id, days_to_analyze)
+
+@tool
+@tool_logger
+def get_top_selling_products(days: int = 30, limit: int = 5, config: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+    """
+    Get the top selling products by quantity over the specified time period.
     
-    # Sort by quantity sold, descending
-    top_products = product_sales.sort_values('quantity', ascending=False).head(limit)
-    
-    # Join with product info
-    result = pd.merge(top_products, products_df, on='product_id')
-    
-    return result.to_dict('records') 
+    Args:
+        days: Number of days to look back (default: 30)
+        limit: Number of top products to return (default: 5)
+        config: Optional configuration for the tool
+        
+    Returns:
+        List of dictionaries with top selling products and their sales data
+    """
+    return _get_top_selling_products(days, limit) 

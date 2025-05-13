@@ -3,7 +3,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
-from app.agent import get_agent_response
+from backend.app.agent import get_agent_response, agent_app
+from typing import Dict, Any, List
+import json
 
 # Create FastAPI app
 app = FastAPI(
@@ -31,8 +33,19 @@ app.add_middleware(
 class QueryRequest(BaseModel):
     query: str
 
+class ToolUsage(BaseModel):
+    step: int
+    tool: str
+    input: Dict[str, Any]
+    output: Any = None
+
+class DebugInfo(BaseModel):
+    tool_usage: List[ToolUsage]
+    message_count: int
+
 class ChatResponse(BaseModel):
     response: str
+    debug: DebugInfo = None
 
 # Health check endpoint
 @app.get("/")
@@ -42,15 +55,90 @@ async def read_root():
         "message": "AI COO Agent Backend is running"
     }
 
+# Detailed debug information endpoint
+@app.post("/api/debug")
+async def debug_agent(request: QueryRequest):
+    try:
+        if not request.query.strip():
+            raise HTTPException(status_code=400, detail="Query cannot be empty")
+        
+        # Create the initial state
+        from langchain_core.messages import HumanMessage
+        initial_state = {
+            "messages": [HumanMessage(content=request.query)],
+        }
+        
+        # Enable full trace
+        config = {"recursion_limit": 25, "traceable": True}
+        
+        # Run the agent
+        result = agent_app.invoke(initial_state, config=config)
+        
+        # Examine each message
+        message_data = []
+        for i, msg in enumerate(result["messages"]):
+            msg_info = {
+                "index": i,
+                "type": type(msg).__name__,
+                "content": getattr(msg, "content", None),
+                "has_tool_calls": hasattr(msg, "tool_calls"),
+                "has_tool_call_results": hasattr(msg, "tool_call_results"),
+            }
+            
+            # If it has tool calls, extract them
+            if hasattr(msg, "tool_calls") and msg.tool_calls:
+                tool_calls = []
+                for tc in msg.tool_calls:
+                    tc_info = {
+                        "type": type(tc).__name__,
+                        "name": getattr(tc, "name", None),
+                        "args": getattr(tc, "args", None),
+                        "id": getattr(tc, "id", None),
+                    }
+                    tool_calls.append(tc_info)
+                msg_info["tool_calls"] = tool_calls
+            
+            # If it has tool call results, extract them
+            if hasattr(msg, "tool_call_results") and msg.tool_call_results:
+                tool_results = []
+                for tr in msg.tool_call_results:
+                    tr_info = {
+                        "type": type(tr).__name__,
+                        "value": tr,
+                    }
+                    tool_results.append(tr_info)
+                msg_info["tool_call_results"] = tool_results
+            
+            message_data.append(msg_info)
+        
+        # Get trace if available
+        trace_data = None
+        if hasattr(agent_app, "get_trace"):
+            try:
+                trace_data = agent_app.get_trace(initial_state)
+                # Convert to JSON-serializable format
+                trace_data = json.loads(json.dumps(trace_data, default=str))
+            except Exception as e:
+                trace_data = {"error": str(e)}
+        
+        return {
+            "response": result["messages"][-1].content if result["messages"] else "",
+            "message_data": message_data,
+            "message_count": len(result["messages"]),
+            "trace_data": trace_data
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Chat endpoint
-@app.post("/api/chat", response_model=ChatResponse)
+@app.post("/api/chat", response_model=None)
 async def chat_with_agent(request: QueryRequest):
     try:
         if not request.query.strip():
             raise HTTPException(status_code=400, detail="Query cannot be empty")
         
-        response = get_agent_response(request.query)
-        return ChatResponse(response=response)
+        result = get_agent_response(request.query)
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
