@@ -44,8 +44,9 @@ export default function ChatWindow() {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // API URL from environment variable or fallback to localhost
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  // TEMPORARY HARDCODING FOR TESTING - REMOVE LATER
+  const API_URL = "https://poccertification-production.up.railway.app";
+  // const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'; // Original line
 
   useEffect(() => {
     // Add welcome message

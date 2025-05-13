@@ -10,8 +10,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Loader2, BarChart3, Package, TrendingUp, ShoppingCart } from "lucide-react"
 
 export default function Chat() {
-  // API URL from environment variable or fallback to localhost
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  // TEMPORARY HARDCODING FOR TESTING - REMOVE LATER
+  const API_URL = "https://poccertification-production.up.railway.app";
+  // const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"; // Original line
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     api: `${API_URL}/api/chat` // Configure the API endpoint
