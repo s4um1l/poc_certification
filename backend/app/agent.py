@@ -1,6 +1,6 @@
 import os
 import uuid
-from typing import List, Dict, Any, Sequence, TypedDict, Callable, Optional
+from typing import List, Dict, Any, Sequence, TypedDict, Callable, Optional, AsyncIterator
 # Try to import Annotated from typing_extensions if not available in typing
 try:
     from typing import Annotated
@@ -331,83 +331,54 @@ def timeout_handler(timeout_seconds=30):
     return decorator
 
 # Apply timeout to the get_agent_response function
-@timeout_handler(timeout_seconds=25)
-def get_agent_response(query: str) -> AgentLogicResponse: # Changed return type
+# @timeout_handler(timeout_seconds=25) # Timeout decorator might need adjustment for async generators
+async def get_agent_response(query: str) -> AsyncIterator[Dict[str, Any]]: # Changed to async generator
     """
-    Get a response from the agent for a given query using LangGraph.
+    Get a response from the agent for a given query using LangGraph, streaming intermediate steps.
     
     Args:
         query: The user's question
         
-    Returns:
-        Dictionary with response and debug information
+    Yields:
+        Dictionaries representing agent events or final response parts.
     """
     try:
-        # Reset tool usage tracker for the new query
         reset_tracker()
-        
-        # Prepare the initial state for the graph
         initial_state = AgentState(messages=[HumanMessage(content=query)])
         
-        # Invoke the LangGraph application
-        # Note: We might need to handle streaming or config if needed later
-        final_state = agent_app.invoke(initial_state)
+        logger.info(f"Agent starting stream for query: {query}")
         
-        # Extract the final response message
-        final_response_message = final_state['messages'][-1]
-        response_content = ""
-        if isinstance(final_response_message, AIMessage):
-            response_content = final_response_message.content
-        elif isinstance(final_response_message, dict) and 'content' in final_response_message:
-            # Handle potential dictionary format if invoke changes behavior
-            response_content = final_response_message['content']
-        else:
-            # Fallback if the last message isn't the expected AI response
-            response_content = "Could not extract a final response from the agent."
+        # Stream events from the LangGraph application
+        # We are using version="v1" for astart_events for a more structured output
+        async for event in agent_app.astream_events(initial_state, version="v1"):
+            event_type = event["event"]
+            # For now, just print the event to understand its structure
+            # In the future, we will transform this into specific yields for the frontend
+            logger.info(f"Agent event: {event_type}, Data: {event['data']}")
+            
+            # Example of what we might yield later (STRUCTURE IS PLACEHOLDER):
+            # if event_type == "on_llm_start":
+            #     yield {"type": "llm_start", "data": event["data"]}
+            # elif event_type == "on_llm_stream":
+            #     yield {"type": "llm_chunk", "data": event["data"]["chunk"]}
+            # elif event_type == "on_tool_start":
+            #     yield {"type": "tool_start", "name": event["data"]["name"], "input": event["data"]["input"]}
+            # elif event_type == "on_tool_end":
+            #     yield {"type": "tool_end", "name": event["data"]["name"], "output": event["data"]["output"]}
+            # etc.
 
-        # Extract tool usage from the tracker
-        tracked_usage_raw = get_tool_usage()
-        # Convert raw tool usage dicts to ToolUsage Pydantic models
-        tool_usage_objects = [ToolUsage(**usage) for usage in tracked_usage_raw] if tracked_usage_raw else []
+            # For this step, we just yield the raw event to see it in main.py
+            yield event # YIELDING RAW EVENT FOR INSPECTION
 
+        # After the loop, assemble final pieces if necessary (this part will change)
+        # For now, this function will just yield events. 
+        # The logic for constructing a final AgentLogicResponse equivalent will be handled by the caller (main.py)
+        # or be part of the streamed events.
+        logger.info("Agent stream finished.")
 
-        return AgentLogicResponse(
-            response=response_content,
-            debug=DebugInfo(
-                tool_usage=tool_usage_objects,
-                message_count=len(final_state.get("messages", [])),
-                error=None
-            ),
-            trace_data=None
-        )
-    
-    except TimeoutError as te:
-        # Handle specific timeout error from decorator
-        print(f"TimeoutError in get_agent_response: {str(te)}")
-        tracked_usage_raw = get_tool_usage() # Get usage even on timeout
-        tool_usage_objects = [ToolUsage(**usage) for usage in tracked_usage_raw] if tracked_usage_raw else []
-        return AgentLogicResponse(
-            response="I'm sorry, but it took too long to process your request. Please try again or simplify your query.",
-            debug=DebugInfo(
-                tool_usage=tool_usage_objects,
-                message_count=0, # No final state available
-                error=str(te)
-            ),
-            trace_data=None
-        )
     except Exception as e:
-        print(f"Error in get_agent_response: {str(e)}")
-        tracked_usage_raw = get_tool_usage() # Get usage even on other errors
-        tool_usage_objects = [ToolUsage(**usage) for usage in tracked_usage_raw] if tracked_usage_raw else []
-        return AgentLogicResponse(
-            response=f"I'm sorry, but there was an error processing your request. Please try again.",
-            debug=DebugInfo(
-                tool_usage=tool_usage_objects,
-                message_count=0, # No final state available
-                error=str(e)
-            ),
-            trace_data=None
-        )
+        logger.error(f"Error in get_agent_response stream: {str(e)}", exc_info=True)
+        yield {"type": "error", "data": {"error": str(e)}} # Yield an error event
 
 # At the end of the file, re-create the agent app to ensure it uses the latest definitions
 agent_app = create_graph() 

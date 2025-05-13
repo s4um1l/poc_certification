@@ -1,28 +1,44 @@
 "use client"
 
-import { useChat } from "@ai-sdk/react"
+import { useChat, type Message } from "@ai-sdk/react"
 import { useRef, useEffect } from "react"
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, BarChart3, Package, TrendingUp, ShoppingCart } from "lucide-react"
+import { Loader2, BarChart3, Package, TrendingUp, ShoppingCart, Wrench } from "lucide-react"
+
+// Define a type for our expected tool usage data for clarity
+interface ToolCallData {
+  tool_name: string;
+  tool_input: any;
+  status: string;
+  result?: any;
+  error?: string;
+  timestamp: string; // Assuming timestamp is a string, adjust if it's another type
+  tool_tracking_id: string;
+}
 
 export default function Chat() {
   // API URL from environment variable or fallback to localhost
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: `${API_URL}/api/chat` // Configure the API endpoint
+    api: `${API_URL}/api/chat`
   })
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-    }
+    // console.log("Updated messages array:", messages);
+    // if (messagesEndRef.current) {
+    //   messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    // }
+    console.log("PAGE.TSX: messages array updated. Length:", messages.length);
+    messages.forEach((msg, index) => {
+      console.log(`PAGE.TSX: Message ${index}: ID=${msg.id}, Role=${msg.role}, Content='${msg.content}', Data=${JSON.stringify(msg.data)}, ToolInvocations=${JSON.stringify(msg.toolInvocations)}`);
+    });
   }, [messages])
 
   return (
@@ -142,23 +158,55 @@ export default function Chat() {
               </div>
             ) : (
               <div className="p-6 space-y-4">
-                {messages.map((message) => (
-                  <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                    <div
-                      className={`max-w-[80%] rounded-lg p-4 shadow-sm ${
-                        message.role === "user"
-                          ? "bg-[#008060] text-white"
-                          : "bg-white border border-gray-100 text-[#212b36] prose"
-                      }`}
-                    >
-                      {message.role === 'user' ? (
-                        message.content
-                      ) : (
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                {messages.map((message: Message) => {
+                  // For assistant messages, check for and display tool data first
+                  if (message.role === 'assistant' && message.data) {
+                    const toolCalls = message.data as unknown as ToolCallData[];
+                    if (toolCalls && Array.isArray(toolCalls) && toolCalls.length > 0) {
+                      // Render tool calls - this part can be a separate component or styled div
+                      // For now, just a placeholder to show it's being processed separately
+                      // from the main content. We will render this, then the main content below.
+                    }
+                  }
+
+                  // Main message rendering (user or assistant text)
+                  if (message.role === 'user' || message.role === 'assistant') {
+                    return (
+                      <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                        <div
+                          className={`max-w-[80%] rounded-lg p-4 shadow-sm ${
+                            message.role === "user"
+                              ? "bg-[#008060] text-white"
+                              : "bg-white border border-gray-100 text-[#212b36] prose"
+                          }`}
+                        >
+                          {/* Display tool usage data if available for this assistant message */}
+                          {message.role === 'assistant' && message.data && Array.isArray(message.data) && (message.data as unknown as ToolCallData[]).length > 0 && (
+                            <div className="mb-2 p-2 border-b border-gray-200 text-xs text-gray-600 prose-sm">
+                              <div className="font-semibold mb-1">Tools Used:</div>
+                              {(message.data as unknown as ToolCallData[]).map((toolCall, index) => (
+                                <div key={index} className="flex items-center mb-1 last:mb-0">
+                                  <Wrench className="h-3 w-3 mr-2 text-gray-500 flex-shrink-0" />
+                                  <span>
+                                    <strong>{toolCall.tool_name}</strong>
+                                    {toolCall.tool_input && Object.keys(toolCall.tool_input).length > 0 && (
+                                      <span className="ml-1 text-gray-500">
+                                        (params: {JSON.stringify(toolCall.tool_input)})
+                                      </span>
+                                    )}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          {/* Render the main message content */}
+                          {message.content && <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>}
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null; // Fallback for any other message roles (e.g. data if it becomes separate)
+                })}
                 <div ref={messagesEndRef} />
               </div>
             )}

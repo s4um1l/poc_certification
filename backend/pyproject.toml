@@ -25,7 +25,7 @@ dependencies = [
     "typing-extensions>=4.7.0",
     "langchain-qdrant>=0.1.0",       # Added new Qdrant package
     "torch>=2.2.2,<2.3.0" ,           # Explicitly pinned torch
-    "vercel-ai"
+    "vercel-ai"  # Reverted to vercel-ai
 ]
 
 # Remove the poetry-specific dependency block

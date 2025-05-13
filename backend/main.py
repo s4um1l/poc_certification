@@ -9,7 +9,8 @@ import json
 import logging
 from contextlib import asynccontextmanager
 # from vercel_ai.fastapi import StreamingTextResponse # Commenting out Vercel specific
-from starlette.responses import StreamingResponse # Using Starlette's generic StreamingResponse
+from starlette.responses import StreamingResponse # Reverted to starlette
+import asyncio
 
 # Import models from app.models
 from app.models import (
@@ -184,28 +185,136 @@ async def chat_with_agent_sdk(request: ChatRequestVercelAI): # Uses ChatRequestV
         if not user_query.strip():
             raise HTTPException(status_code=400, detail="User query content cannot be empty")
 
-        # get_agent_response will now return an AgentLogicResponse Pydantic model instance
-        agent_response_obj: AgentLogicResponse = get_agent_response(user_query)
-        
-        # Log the Pydantic model (optional, but can be useful)
-        # logger.info(f"AgentLogicResponse object: {agent_response_obj.model_dump_json(indent=2)}")
+        logger.info(f"Received user query for streaming: {user_query}")
 
-        response_content = agent_response_obj.response # Access via attribute
-        logger.info(f"Preparing to stream response content: '{response_content}'") # Log the content
+        async def event_stream_generator():
+            # current_tool_calls_details maps llm_tool_call_id to {'name': tool_name, 'args_str': tool_args_str, 'type': 'function'}
+            current_tool_calls_details = {} 
+            # tool_id_for_index maps a tool_call_chunk's 'index' to its official 'tool_call_id'
+            # tool_id_for_index = {}
 
-        async def content_stream():
-            if response_content: # Check if there is content to send
-                # Format according to Vercel AI SDK text streaming convention
-                yield f"0:{json.dumps(response_content)}\n"
-            # else: yield nothing or an empty marker if required by protocol
+            # logger.info("Using SUPER SIMPLE event_stream_generator for Vercel Data Protocol.")
+            # yield f"0:{json.dumps(\"Hello from backend...\\n\")}\\n"
+            # await asyncio.sleep(0.1) 
+            # yield f"0:{json.dumps(\"This is message 1.\\n\")}\\n"
+            # await asyncio.sleep(0.1)
+            # yield f"0:{json.dumps(\"This is message 2.\\n\")}\\n"
+            # await asyncio.sleep(0.1)
+            # yield f"0:{json.dumps(\"Stream finished.\\n\")}\\n"
+            # logger.info("SUPER SIMPLE event_stream_generator finished.")
+            # return 
 
-        return StreamingResponse(content_stream(), media_type="text/plain")
+            logger.info(f"[{user_query}] Entering event_stream_generator with get_agent_response loop.")
+            events_processed_count = 0
+            has_yielded_first_contentful_text_chunk = False # New flag
+            try:
+                # Send a preliminary 2:data_json message - REMOVE THIS SECTION
+                # control_message = {"type": "control", "data": "starting_text_stream"}
+                # logger.info(f"[{user_query}] Yielding preliminary control message: {control_message}")
+                # yield f"2:{json.dumps(control_message)}\\n"
+                # logger.info(f"[{user_query}] Successfully yielded preliminary control message.")
 
-    except HTTPException: # Re-raise HTTPExceptions directly
+                async for event in get_agent_response(user_query):
+                    event_type = event["event"]
+                    event_data = event["data"]
+                    event_name = event.get("name", "N/A")
+                    run_id = event.get("run_id", "N/A")
+                    logger.info(f"[{user_query}] Received event from get_agent_response: type='{event_type}', name='{event_name}', run_id='{run_id}'")
+                    # logger.debug(f"[{user_query}] Event data: {event_data}") # Can be very verbose
+
+                    if event_type == "on_llm_stream" or event_type == "on_chat_model_stream":
+                        logger.info(f"[{user_query}] Processing '{event_type}' for text content.")
+                        chunk = event_data.get("chunk")
+                        if chunk: # We have a chunk object
+                            if hasattr(chunk, "content") and isinstance(chunk.content, str):
+                                text_to_yield = chunk.content
+                                
+                                # Skip initial empty chunks until first contentful one
+                                if not has_yielded_first_contentful_text_chunk and not text_to_yield.strip():
+                                    logger.info(f"[{user_query}] Skipping initial empty text chunk from '{event_type}'.")
+                                else:
+                                    logger.info(f"[{user_query}] Preparing to yield text chunk (len={len(text_to_yield)}) from '{event_type}': {text_to_yield[:70]}...")
+                                    yield f"0:{json.dumps(text_to_yield)}\\n"
+                                    logger.info(f"[{user_query}] Successfully yielded text chunk (len={len(text_to_yield)}). Events processed: {events_processed_count + 1}")
+                                    if not has_yielded_first_contentful_text_chunk and text_to_yield.strip():
+                                        has_yielded_first_contentful_text_chunk = True
+                                        logger.info(f"[{user_query}] First contentful text chunk yielded.")
+                                    events_processed_count += 1
+                            else:
+                                logger.warning(f"[{user_query}] '{event_type}' chunk did not have a usable .content attribute or was not a string. Chunk type: {type(chunk)}, Chunk: {chunk}")
+                        else:
+                            logger.warning(f"[{user_query}] '{event_type}' had no 'chunk' in event_data.")
+                    
+                    elif event_type == "on_llm_end" or event_type == "on_chat_model_end":
+                        logger.info(f"[{user_query}] Processing '{event_type}' event.")
+                        output = event_data.get("output")
+                        if output and hasattr(output, "tool_calls") and output.tool_calls:
+                            # Tool call yielding (9:) is still commented out for this test
+                            for tc_for_storage in output.tool_calls: 
+                                if tc_for_storage.get("name") and tc_for_storage.get("id"):
+                                    current_tool_calls_details[tc_for_storage["id"]] = {
+                                        "name": tc_for_storage["name"],
+                                        "args_str": json.dumps(tc_for_storage.get("args", {})), 
+                                        "type": "function"
+                                    }
+                                    logger.info(f"[{user_query}] Stored tool call detail for ID: {tc_for_storage["id"]}")
+                            events_processed_count += 1 # Count this as a processed event type
+
+                    elif event_type == "on_chain_stream":
+                        # Tool result yielding (a:) is still commented out for this test
+                        logger.info(f"[{user_query}] Processing on_chain_stream event (tool results currently not yielded).")
+                        # Minimal processing to store details if needed, similar to on_llm_end for current_tool_calls_details
+                        events_processed_count += 1 # Count this as a processed event type
+                        pass
+                    
+                    elif event_type == "on_tool_start":
+                        logger.info(f"[{user_query}] Processing on_tool_start: {event_data.get('name')}")
+                        events_processed_count += 1
+                    
+                    elif event_type == "on_tool_end":
+                        logger.info(f"[{user_query}] Processing on_tool_end: {event_data.get('name')}")
+                        events_processed_count += 1
+                    
+                    else:
+                        logger.info(f"[{user_query}] Received unhandled event type: {event_type}")
+
+                logger.info(f"[{user_query}] Exited get_agent_response loop. Total events processed for yielding/logging: {events_processed_count}")
+            except Exception as e:
+                logger.error(f"[{user_query}] Exception INSIDE event_stream_generator loop: {e}", exc_info=True)
+                # Try to yield an error message to the client if possible
+                error_payload = {"error": f"Error during agent processing: {str(e)}"}
+                try:
+                    yield f"0:{json.dumps(error_payload)}\\n"
+                    logger.info(f"[{user_query}] Yielded error message to client due to internal exception.")
+                except Exception as e_yield:
+                    logger.error(f"[{user_query}] Failed to yield error message to client: {e_yield}", exc_info=True)
+            finally:
+                logger.info(f"[{user_query}] Event_stream_generator finally block. Processed {events_processed_count} yieldable events.")
+
+        headers = {
+            "X-Vercel-AI-Data-Stream": "v1",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        }
+        return StreamingResponse(event_stream_generator(), media_type="text/plain; charset=utf-8", headers=headers)
+
+    except HTTPException: 
         raise
     except Exception as e:
-        logger.error(f"Error in /api/chat (SDK): {e}", exc_info=True) # Keep exc_info for full traceback
-        raise HTTPException(status_code=500, detail="An internal server error occurred.")
+        logger.error(f"Error in /api/chat (SDK streaming): {e}", exc_info=True)
+        async def error_stream():
+            error_payload = {"type": "error", "message": "An internal server error occurred during streaming."}
+            # Vercel uses '8' for general error messages in the stream data part
+            # or a status code with a JSON body. Prefix '6' was from an old spec.
+            # The AI SDK client might expect a JSON error object or a specific prefix like ' X-Experimental-Stream-Data-Error'.
+            # For simplicity, using a generic JSON error that the frontend might try to parse or display.
+            # Let's use a simple error message with prefix '0' assuming it might be displayed as text.
+            # Or, consult Vercel AI SDK docs for their specific error streaming format.
+            # Using the '6' prefix for now as it was in previous attempt, but needs verification.
+            # AI SDK docs on Stream Protocols might clarify this.
+            # Given the main content is text/plain, a prefixed error is common.
+            yield f"0:{json.dumps({'error': 'An internal server error occurred.'})}\\n" # Simpler error as text
+        return StreamingResponse(error_stream(), media_type="text/plain", status_code=500)
 
 # Create a .env file if it doesn't exist
 if not os.path.exists(".env"):
