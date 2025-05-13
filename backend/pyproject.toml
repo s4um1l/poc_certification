@@ -15,17 +15,26 @@ dependencies = [
     'uvicorn[standard]>=0.30.3', # Use quotes for extras
     "python-dotenv>=1.0.1",
     "pandas>=2.2.2",
-    "numpy<2.0",                     # Added NumPy version constraint
-    "langchain-community>=0.0.10",   # Added
-    "langchain-core>=0.1.20",        # Added
+    "numpy<2.0", # Added NumPy version constraint
+    "langchain-community>=0.0.10", # Added
+    "langchain-core>=0.1.20", # Added
     "faker>=19.3.1",
     "pydantic>=2.3.0",
     "ragas>=0.0.20",
     "python-multipart>=0.0.6",
     "typing-extensions>=4.7.0",
-    "langchain-qdrant>=0.1.0",       # Added new Qdrant package
-    "torch>=2.2.2,<2.3.0" ,           # Explicitly pinned torch
-    "vercel-ai"
+    "langchain-qdrant>=0.1.0", # Added new Qdrant package
+    "torch>=2.2.2,<2.3.0", # Explicitly pinned torch
+    "vercel-ai",
+    "pygraphviz>=1.12", # Added for graph visualization
+    "pytz>=2023.3", # Added for pandas
+    "python-dateutil>=2.8.2", # Added for pandas
+    "langchain-text-splitters>=0.2.0", # Added for data_processing.py
+    "pyppeteer>=1.0.2", # Added for local Mermaid rendering
+    "datasets>=2.0.0", # Added for Ragas evaluation dataset conversion
+    "rapidfuzz>=3.0.0", # Added for Ragas testset generation (string distance)
+    "mermaid-cli", # Added for mermaid diagram generation (alternative)
+    "unstructured>=0.17.2",
 ]
 
 # Remove the poetry-specific dependency block

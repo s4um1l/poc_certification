@@ -10,6 +10,7 @@ import logging
 from contextlib import asynccontextmanager
 # from vercel_ai.fastapi import StreamingTextResponse # Commenting out Vercel specific
 from starlette.responses import StreamingResponse # Using Starlette's generic StreamingResponse
+from pydantic import BaseModel # Add Pydantic BaseModel if not already explicitly imported for new model
 
 # Import models from app.models
 from app.models import (
@@ -168,6 +169,38 @@ async def debug_agent(request: QueryRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# Define a Pydantic model for the /api/test_rag request
+class RAGTestRequest(BaseModel):
+    query: str
+
+# New endpoint to directly test RAG
+@app.post("/api/test_rag")
+async def test_rag_tool(request: RAGTestRequest):
+    if not agent_module.rag_retriever:
+        logger.error("/api/test_rag called but RAG retriever is not initialized.")
+        raise HTTPException(status_code=503, detail="RAG retriever is not available or not initialized.")
+    
+    if not request.query or not request.query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty.")
+
+    logger.info(f"/api/test_rag called with query: '{request.query}'")
+    try:
+        retrieved_docs = await agent_module.rag_retriever.ainvoke(request.query)
+        contexts = [doc.page_content for doc in retrieved_docs]
+        
+        answer = ""
+        if contexts:
+            answer = "\\n\\n---\\n\\n".join(contexts)
+            logger.info(f"/api/test_rag: Retrieved {len(contexts)} contexts.")
+        else:
+            answer = "No relevant documents found for the query."
+            logger.info("/api/test_rag: No contexts retrieved.")
+            
+        return {"answer": answer, "contexts": contexts}
+    except Exception as e:
+        logger.error(f"Error in /api/test_rag for query '{request.query}': {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error processing RAG request: {str(e)}")
 
 # Chat endpoint - MODIFIED
 @app.post("/api/chat")

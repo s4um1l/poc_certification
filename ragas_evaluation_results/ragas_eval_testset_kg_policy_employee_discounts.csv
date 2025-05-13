@@ -1,0 +1,523 @@
+user_input,retrieved_contexts,response,reference,faithfulness,answer_relevancy,context_precision,context_recall,answer_correctness
+What is the standard discount rate offered to employees for company products?,"['# Company Policy: Employee Discounts\n\n**1. Policy Statement:**\nActively employed staff are entitled to a discount on company products as a benefit of employment.\n\n**2. Discount Rate:**\nThe standard employee discount is 20% off the retail price.\n\n**3. Eligibility & Verification:**\n- **Eligibility:** All full-time and part-time employees currently employed by the company.\n- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.\n- **Code Usage:** Each employee receives a unique, non-transferable discount code.\n\n**4. Usage Guidelines:**\n- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).\n- **Resale Prohibited:** Items purchased with the employee discount may not be resold.\n- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).\n- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.\n\n**5. Exclusions:**\n- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.\n- Gift cards are excluded from the employee discount.\n\n**6. Termination of Employment:**\nThe discount privilege ceases immediately upon termination of employment.\n\n**7. Policy Abuse:**\nAbuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.', '# Company Policy: Customer Discounts & Promotions\n\n**1. Overview:**\nThis policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.\n\n**2. Types of Discounts:**\n\n  **a) First-Time Buyer Discount:**\n    - **Offer:** 10% off the first order.\n    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).\n    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.\n\n  **b) Loyalty Program Discounts:**\n    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).\n    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.\n    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.\n\n  **c) Promotional / Seasonal Sales:**\n    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).\n    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.\n    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).\n\n  **d) Tiered Discounts (Volume/Cart Value):**\n    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).\n    - **Mechanism:** Usually applied automatically at checkout.\n\n  **e) Abandoned Cart Recovery:**\n    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.\n    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.\n    - **Conditions:** Time-sensitive, usually single-use.\n\n**3. General Conditions & Exclusions:**\n- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).\n- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.\n- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).', '**4. Discount Code Management:**\n- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.\n- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).\n- **Testing:** All codes must be tested before promotion begins.\n- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.\n\n**5. Approval:**\nMajor promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.', '# Playbook: Flash Sales Strategy\n\n**Objective:** To drive a rapid surge in sales, clear specific inventory, acquire new customers, or re-engage existing ones through a time-limited, high-discount event.\n\n**I. Planning Phase (2-4 Weeks Prior)**\n\n  **A. Goals & KPIs:**\n    [ ] Define primary goal (e.g., revenue target, units sold of specific SKU, new customer acquisition).\n    [ ] Set specific, measurable KPIs (e.g., $X revenue, Y units, Z% conversion rate, A new customers).\n\n  **B. Offer & Product Selection:**\n    [ ] Select products/collections for the sale. Consider inventory levels, margins, and strategic goals.\n    [ ] Determine the discount structure (e.g., 30-50% off, specific price point). Ensure margins support the discount.\n    [ ] Set sale duration (typically 12-48 hours). Define exact start and end times (including timezone).\n    [ ] Decide on any purchase limits per customer (if needed).\n\n  **C. Marketing & Promotion:**\n    [ ] Develop promotional calendar (teasers, announcement, reminders, launch, final hours).\n    [ ] Create all marketing assets (email campaigns, social media posts/ads, website banners, SMS alerts).\n    [ ] Segment email lists for targeted messaging (e.g., VIPs get early access).\n    [ ] Plan paid ad strategy (channels, budget, targeting).\n    [ ] Prepare website updates (homepage banner, dedicated landing page/collection).\n\n  **D. Logistics & Technical Prep:**\n    [ ] Coordinate with inventory team: ensure sufficient stock is available and allocated.\n    [ ] Coordinate with customer support: brief team on sale details, anticipate increased volume.\n    [ ] Technical checks: ensure website/server can handle traffic spike. Test discount codes/automatic discounts thoroughly.\n    [ ] Set up tracking (UTM codes, specific analytics views).\n\n**II. Execution Phase (During Sale)**\n\n  [ ] Launch scheduled promotions (emails, social posts, ads).\n  [ ] Update website banners/homepage.\n  [ ] Monitor sales performance and website stability in real-time.\n  [ ] Monitor ad performance and adjust bids/budgets as needed.\n  [ ] Engage with customer comments/questions on social media.\n  [ ] Send reminder emails/posts (e.g., ""12 hours left!"").\n\n**III. Post-Sale Phase (Immediately After)**\n\n  **A. Fulfillment & Support:**\n    [ ] Disable discount codes/remove sale banners promptly at the end time.\n    [ ] Send ""Sale Ended"" communication (optional, can include thank you or hint at future events).\n    [ ] Fulfillment team prioritizes processing the high volume of sale orders.\n    [ ] Customer support manages post-sale inquiries.']","# Company Policy: Employee Discounts
+
+**1. Policy Statement:**
+Actively employed staff are entitled to a discount on company products as a benefit of employment.
+
+**2. Discount Rate:**
+The standard employee discount is 20% off the retail price.
+
+**3. Eligibility & Verification:**
+- **Eligibility:** All full-time and part-time employees currently employed by the company.
+- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.
+- **Code Usage:** Each employee receives a unique, non-transferable discount code.
+
+**4. Usage Guidelines:**
+- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).
+- **Resale Prohibited:** Items purchased with the employee discount may not be resold.
+- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).
+- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.
+
+**5. Exclusions:**
+- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.
+- Gift cards are excluded from the employee discount.
+
+**6. Termination of Employment:**
+The discount privilege ceases immediately upon termination of employment.
+
+**7. Policy Abuse:**
+Abuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.\n\n---\n\n# Company Policy: Customer Discounts & Promotions
+
+**1. Overview:**
+This policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.
+
+**2. Types of Discounts:**
+
+  **a) First-Time Buyer Discount:**
+    - **Offer:** 10% off the first order.
+    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).
+    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.
+
+  **b) Loyalty Program Discounts:**
+    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).
+    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.
+    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.
+
+  **c) Promotional / Seasonal Sales:**
+    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).
+    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.
+    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).
+
+  **d) Tiered Discounts (Volume/Cart Value):**
+    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).
+    - **Mechanism:** Usually applied automatically at checkout.
+
+  **e) Abandoned Cart Recovery:**
+    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.
+    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.
+    - **Conditions:** Time-sensitive, usually single-use.
+
+**3. General Conditions & Exclusions:**
+- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).
+- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.
+- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).\n\n---\n\n**4. Discount Code Management:**
+- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.
+- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).
+- **Testing:** All codes must be tested before promotion begins.
+- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.
+
+**5. Approval:**
+Major promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.\n\n---\n\n# Playbook: Flash Sales Strategy
+
+**Objective:** To drive a rapid surge in sales, clear specific inventory, acquire new customers, or re-engage existing ones through a time-limited, high-discount event.
+
+**I. Planning Phase (2-4 Weeks Prior)**
+
+  **A. Goals & KPIs:**
+    [ ] Define primary goal (e.g., revenue target, units sold of specific SKU, new customer acquisition).
+    [ ] Set specific, measurable KPIs (e.g., $X revenue, Y units, Z% conversion rate, A new customers).
+
+  **B. Offer & Product Selection:**
+    [ ] Select products/collections for the sale. Consider inventory levels, margins, and strategic goals.
+    [ ] Determine the discount structure (e.g., 30-50% off, specific price point). Ensure margins support the discount.
+    [ ] Set sale duration (typically 12-48 hours). Define exact start and end times (including timezone).
+    [ ] Decide on any purchase limits per customer (if needed).
+
+  **C. Marketing & Promotion:**
+    [ ] Develop promotional calendar (teasers, announcement, reminders, launch, final hours).
+    [ ] Create all marketing assets (email campaigns, social media posts/ads, website banners, SMS alerts).
+    [ ] Segment email lists for targeted messaging (e.g., VIPs get early access).
+    [ ] Plan paid ad strategy (channels, budget, targeting).
+    [ ] Prepare website updates (homepage banner, dedicated landing page/collection).
+
+  **D. Logistics & Technical Prep:**
+    [ ] Coordinate with inventory team: ensure sufficient stock is available and allocated.
+    [ ] Coordinate with customer support: brief team on sale details, anticipate increased volume.
+    [ ] Technical checks: ensure website/server can handle traffic spike. Test discount codes/automatic discounts thoroughly.
+    [ ] Set up tracking (UTM codes, specific analytics views).
+
+**II. Execution Phase (During Sale)**
+
+  [ ] Launch scheduled promotions (emails, social posts, ads).
+  [ ] Update website banners/homepage.
+  [ ] Monitor sales performance and website stability in real-time.
+  [ ] Monitor ad performance and adjust bids/budgets as needed.
+  [ ] Engage with customer comments/questions on social media.
+  [ ] Send reminder emails/posts (e.g., ""12 hours left!"").
+
+**III. Post-Sale Phase (Immediately After)**
+
+  **A. Fulfillment & Support:**
+    [ ] Disable discount codes/remove sale banners promptly at the end time.
+    [ ] Send ""Sale Ended"" communication (optional, can include thank you or hint at future events).
+    [ ] Fulfillment team prioritizes processing the high volume of sale orders.
+    [ ] Customer support manages post-sale inquiries.",The standard employee discount is 20% off the retail price.,1.0,0.8980780196071745,0.9999999999,1.0,0.2289223165969006
+What is the policy regarding the termination of employment in relation to the employee discount?,"['# Company Policy: Employee Discounts\n\n**1. Policy Statement:**\nActively employed staff are entitled to a discount on company products as a benefit of employment.\n\n**2. Discount Rate:**\nThe standard employee discount is 20% off the retail price.\n\n**3. Eligibility & Verification:**\n- **Eligibility:** All full-time and part-time employees currently employed by the company.\n- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.\n- **Code Usage:** Each employee receives a unique, non-transferable discount code.\n\n**4. Usage Guidelines:**\n- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).\n- **Resale Prohibited:** Items purchased with the employee discount may not be resold.\n- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).\n- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.\n\n**5. Exclusions:**\n- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.\n- Gift cards are excluded from the employee discount.\n\n**6. Termination of Employment:**\nThe discount privilege ceases immediately upon termination of employment.\n\n**7. Policy Abuse:**\nAbuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.', '# Company Policy: Customer Discounts & Promotions\n\n**1. Overview:**\nThis policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.\n\n**2. Types of Discounts:**\n\n  **a) First-Time Buyer Discount:**\n    - **Offer:** 10% off the first order.\n    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).\n    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.\n\n  **b) Loyalty Program Discounts:**\n    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).\n    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.\n    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.\n\n  **c) Promotional / Seasonal Sales:**\n    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).\n    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.\n    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).\n\n  **d) Tiered Discounts (Volume/Cart Value):**\n    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).\n    - **Mechanism:** Usually applied automatically at checkout.\n\n  **e) Abandoned Cart Recovery:**\n    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.\n    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.\n    - **Conditions:** Time-sensitive, usually single-use.\n\n**3. General Conditions & Exclusions:**\n- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).\n- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.\n- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).', ""# Standard Operating Procedure: Product Returns\n\n**1. Policy Overview:**\nCustomers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.\n\n**2. Eligibility:**\n- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.\n- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.\n- **Proof of Purchase:** Original receipt or order confirmation email is required.\n- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.\n\n**3. Return Procedure:**\n- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.\n- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).\n- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.\n- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).\n\n**4. Inspection and Refund Processing:**\n- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.\n- **Approval:** If the return meets eligibility criteria, a refund is processed.\n- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.\n- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.\n\n**5. Exchanges:**\nDirect exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item."", '# Playbook: Flash Sales Strategy\n\n**Objective:** To drive a rapid surge in sales, clear specific inventory, acquire new customers, or re-engage existing ones through a time-limited, high-discount event.\n\n**I. Planning Phase (2-4 Weeks Prior)**\n\n  **A. Goals & KPIs:**\n    [ ] Define primary goal (e.g., revenue target, units sold of specific SKU, new customer acquisition).\n    [ ] Set specific, measurable KPIs (e.g., $X revenue, Y units, Z% conversion rate, A new customers).\n\n  **B. Offer & Product Selection:**\n    [ ] Select products/collections for the sale. Consider inventory levels, margins, and strategic goals.\n    [ ] Determine the discount structure (e.g., 30-50% off, specific price point). Ensure margins support the discount.\n    [ ] Set sale duration (typically 12-48 hours). Define exact start and end times (including timezone).\n    [ ] Decide on any purchase limits per customer (if needed).\n\n  **C. Marketing & Promotion:**\n    [ ] Develop promotional calendar (teasers, announcement, reminders, launch, final hours).\n    [ ] Create all marketing assets (email campaigns, social media posts/ads, website banners, SMS alerts).\n    [ ] Segment email lists for targeted messaging (e.g., VIPs get early access).\n    [ ] Plan paid ad strategy (channels, budget, targeting).\n    [ ] Prepare website updates (homepage banner, dedicated landing page/collection).\n\n  **D. Logistics & Technical Prep:**\n    [ ] Coordinate with inventory team: ensure sufficient stock is available and allocated.\n    [ ] Coordinate with customer support: brief team on sale details, anticipate increased volume.\n    [ ] Technical checks: ensure website/server can handle traffic spike. Test discount codes/automatic discounts thoroughly.\n    [ ] Set up tracking (UTM codes, specific analytics views).\n\n**II. Execution Phase (During Sale)**\n\n  [ ] Launch scheduled promotions (emails, social posts, ads).\n  [ ] Update website banners/homepage.\n  [ ] Monitor sales performance and website stability in real-time.\n  [ ] Monitor ad performance and adjust bids/budgets as needed.\n  [ ] Engage with customer comments/questions on social media.\n  [ ] Send reminder emails/posts (e.g., ""12 hours left!"").\n\n**III. Post-Sale Phase (Immediately After)**\n\n  **A. Fulfillment & Support:**\n    [ ] Disable discount codes/remove sale banners promptly at the end time.\n    [ ] Send ""Sale Ended"" communication (optional, can include thank you or hint at future events).\n    [ ] Fulfillment team prioritizes processing the high volume of sale orders.\n    [ ] Customer support manages post-sale inquiries.']","# Company Policy: Employee Discounts
+
+**1. Policy Statement:**
+Actively employed staff are entitled to a discount on company products as a benefit of employment.
+
+**2. Discount Rate:**
+The standard employee discount is 20% off the retail price.
+
+**3. Eligibility & Verification:**
+- **Eligibility:** All full-time and part-time employees currently employed by the company.
+- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.
+- **Code Usage:** Each employee receives a unique, non-transferable discount code.
+
+**4. Usage Guidelines:**
+- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).
+- **Resale Prohibited:** Items purchased with the employee discount may not be resold.
+- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).
+- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.
+
+**5. Exclusions:**
+- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.
+- Gift cards are excluded from the employee discount.
+
+**6. Termination of Employment:**
+The discount privilege ceases immediately upon termination of employment.
+
+**7. Policy Abuse:**
+Abuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.\n\n---\n\n# Company Policy: Customer Discounts & Promotions
+
+**1. Overview:**
+This policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.
+
+**2. Types of Discounts:**
+
+  **a) First-Time Buyer Discount:**
+    - **Offer:** 10% off the first order.
+    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).
+    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.
+
+  **b) Loyalty Program Discounts:**
+    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).
+    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.
+    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.
+
+  **c) Promotional / Seasonal Sales:**
+    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).
+    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.
+    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).
+
+  **d) Tiered Discounts (Volume/Cart Value):**
+    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).
+    - **Mechanism:** Usually applied automatically at checkout.
+
+  **e) Abandoned Cart Recovery:**
+    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.
+    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.
+    - **Conditions:** Time-sensitive, usually single-use.
+
+**3. General Conditions & Exclusions:**
+- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).
+- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.
+- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).\n\n---\n\n# Standard Operating Procedure: Product Returns
+
+**1. Policy Overview:**
+Customers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.
+
+**2. Eligibility:**
+- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.
+- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.
+- **Proof of Purchase:** Original receipt or order confirmation email is required.
+- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.
+
+**3. Return Procedure:**
+- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.
+- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).
+- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.
+- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).
+
+**4. Inspection and Refund Processing:**
+- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.
+- **Approval:** If the return meets eligibility criteria, a refund is processed.
+- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.
+- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.
+
+**5. Exchanges:**
+Direct exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item.\n\n---\n\n# Playbook: Flash Sales Strategy
+
+**Objective:** To drive a rapid surge in sales, clear specific inventory, acquire new customers, or re-engage existing ones through a time-limited, high-discount event.
+
+**I. Planning Phase (2-4 Weeks Prior)**
+
+  **A. Goals & KPIs:**
+    [ ] Define primary goal (e.g., revenue target, units sold of specific SKU, new customer acquisition).
+    [ ] Set specific, measurable KPIs (e.g., $X revenue, Y units, Z% conversion rate, A new customers).
+
+  **B. Offer & Product Selection:**
+    [ ] Select products/collections for the sale. Consider inventory levels, margins, and strategic goals.
+    [ ] Determine the discount structure (e.g., 30-50% off, specific price point). Ensure margins support the discount.
+    [ ] Set sale duration (typically 12-48 hours). Define exact start and end times (including timezone).
+    [ ] Decide on any purchase limits per customer (if needed).
+
+  **C. Marketing & Promotion:**
+    [ ] Develop promotional calendar (teasers, announcement, reminders, launch, final hours).
+    [ ] Create all marketing assets (email campaigns, social media posts/ads, website banners, SMS alerts).
+    [ ] Segment email lists for targeted messaging (e.g., VIPs get early access).
+    [ ] Plan paid ad strategy (channels, budget, targeting).
+    [ ] Prepare website updates (homepage banner, dedicated landing page/collection).
+
+  **D. Logistics & Technical Prep:**
+    [ ] Coordinate with inventory team: ensure sufficient stock is available and allocated.
+    [ ] Coordinate with customer support: brief team on sale details, anticipate increased volume.
+    [ ] Technical checks: ensure website/server can handle traffic spike. Test discount codes/automatic discounts thoroughly.
+    [ ] Set up tracking (UTM codes, specific analytics views).
+
+**II. Execution Phase (During Sale)**
+
+  [ ] Launch scheduled promotions (emails, social posts, ads).
+  [ ] Update website banners/homepage.
+  [ ] Monitor sales performance and website stability in real-time.
+  [ ] Monitor ad performance and adjust bids/budgets as needed.
+  [ ] Engage with customer comments/questions on social media.
+  [ ] Send reminder emails/posts (e.g., ""12 hours left!"").
+
+**III. Post-Sale Phase (Immediately After)**
+
+  **A. Fulfillment & Support:**
+    [ ] Disable discount codes/remove sale banners promptly at the end time.
+    [ ] Send ""Sale Ended"" communication (optional, can include thank you or hint at future events).
+    [ ] Fulfillment team prioritizes processing the high volume of sale orders.
+    [ ] Customer support manages post-sale inquiries.",The discount privilege ceases immediately upon termination of employment.,1.0,0.9281739266080747,0.9999999999,1.0,0.9471116641400148
+What is the purpose of the Policy Statement in the company's employee benefits policy?,"['# Company Policy: Employee Discounts\n\n**1. Policy Statement:**\nActively employed staff are entitled to a discount on company products as a benefit of employment.\n\n**2. Discount Rate:**\nThe standard employee discount is 20% off the retail price.\n\n**3. Eligibility & Verification:**\n- **Eligibility:** All full-time and part-time employees currently employed by the company.\n- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.\n- **Code Usage:** Each employee receives a unique, non-transferable discount code.\n\n**4. Usage Guidelines:**\n- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).\n- **Resale Prohibited:** Items purchased with the employee discount may not be resold.\n- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).\n- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.\n\n**5. Exclusions:**\n- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.\n- Gift cards are excluded from the employee discount.\n\n**6. Termination of Employment:**\nThe discount privilege ceases immediately upon termination of employment.\n\n**7. Policy Abuse:**\nAbuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.', '# Company Policy: Customer Discounts & Promotions\n\n**1. Overview:**\nThis policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.\n\n**2. Types of Discounts:**\n\n  **a) First-Time Buyer Discount:**\n    - **Offer:** 10% off the first order.\n    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).\n    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.\n\n  **b) Loyalty Program Discounts:**\n    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).\n    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.\n    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.\n\n  **c) Promotional / Seasonal Sales:**\n    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).\n    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.\n    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).\n\n  **d) Tiered Discounts (Volume/Cart Value):**\n    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).\n    - **Mechanism:** Usually applied automatically at checkout.\n\n  **e) Abandoned Cart Recovery:**\n    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.\n    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.\n    - **Conditions:** Time-sensitive, usually single-use.\n\n**3. General Conditions & Exclusions:**\n- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).\n- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.\n- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).', '**4. Discount Code Management:**\n- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.\n- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).\n- **Testing:** All codes must be tested before promotion begins.\n- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.\n\n**5. Approval:**\nMajor promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.', ""# Standard Operating Procedure: Product Returns\n\n**1. Policy Overview:**\nCustomers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.\n\n**2. Eligibility:**\n- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.\n- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.\n- **Proof of Purchase:** Original receipt or order confirmation email is required.\n- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.\n\n**3. Return Procedure:**\n- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.\n- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).\n- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.\n- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).\n\n**4. Inspection and Refund Processing:**\n- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.\n- **Approval:** If the return meets eligibility criteria, a refund is processed.\n- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.\n- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.\n\n**5. Exchanges:**\nDirect exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item.""]","# Company Policy: Employee Discounts
+
+**1. Policy Statement:**
+Actively employed staff are entitled to a discount on company products as a benefit of employment.
+
+**2. Discount Rate:**
+The standard employee discount is 20% off the retail price.
+
+**3. Eligibility & Verification:**
+- **Eligibility:** All full-time and part-time employees currently employed by the company.
+- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.
+- **Code Usage:** Each employee receives a unique, non-transferable discount code.
+
+**4. Usage Guidelines:**
+- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).
+- **Resale Prohibited:** Items purchased with the employee discount may not be resold.
+- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).
+- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.
+
+**5. Exclusions:**
+- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.
+- Gift cards are excluded from the employee discount.
+
+**6. Termination of Employment:**
+The discount privilege ceases immediately upon termination of employment.
+
+**7. Policy Abuse:**
+Abuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.\n\n---\n\n# Company Policy: Customer Discounts & Promotions
+
+**1. Overview:**
+This policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.
+
+**2. Types of Discounts:**
+
+  **a) First-Time Buyer Discount:**
+    - **Offer:** 10% off the first order.
+    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).
+    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.
+
+  **b) Loyalty Program Discounts:**
+    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).
+    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.
+    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.
+
+  **c) Promotional / Seasonal Sales:**
+    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).
+    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.
+    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).
+
+  **d) Tiered Discounts (Volume/Cart Value):**
+    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).
+    - **Mechanism:** Usually applied automatically at checkout.
+
+  **e) Abandoned Cart Recovery:**
+    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.
+    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.
+    - **Conditions:** Time-sensitive, usually single-use.
+
+**3. General Conditions & Exclusions:**
+- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).
+- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.
+- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).\n\n---\n\n**4. Discount Code Management:**
+- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.
+- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).
+- **Testing:** All codes must be tested before promotion begins.
+- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.
+
+**5. Approval:**
+Major promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.\n\n---\n\n# Standard Operating Procedure: Product Returns
+
+**1. Policy Overview:**
+Customers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.
+
+**2. Eligibility:**
+- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.
+- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.
+- **Proof of Purchase:** Original receipt or order confirmation email is required.
+- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.
+
+**3. Return Procedure:**
+- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.
+- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).
+- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.
+- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).
+
+**4. Inspection and Refund Processing:**
+- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.
+- **Approval:** If the return meets eligibility criteria, a refund is processed.
+- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.
+- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.
+
+**5. Exchanges:**
+Direct exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item.","The Policy Statement in the company's employee benefits policy outlines the entitlement of actively employed staff to a discount on company products as a benefit of employment. It specifies the eligibility criteria, verification process, code usage guidelines, personal use restrictions, resale prohibitions, frequency limits, combination rules, exclusions, termination implications, and consequences of policy abuse.",1.0,0.8051010701418934,0.9999999999,1.0,0.5535805845794792
+What happens to the employee discount privilege upon termination of employment?,"['# Company Policy: Employee Discounts\n\n**1. Policy Statement:**\nActively employed staff are entitled to a discount on company products as a benefit of employment.\n\n**2. Discount Rate:**\nThe standard employee discount is 20% off the retail price.\n\n**3. Eligibility & Verification:**\n- **Eligibility:** All full-time and part-time employees currently employed by the company.\n- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.\n- **Code Usage:** Each employee receives a unique, non-transferable discount code.\n\n**4. Usage Guidelines:**\n- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).\n- **Resale Prohibited:** Items purchased with the employee discount may not be resold.\n- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).\n- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.\n\n**5. Exclusions:**\n- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.\n- Gift cards are excluded from the employee discount.\n\n**6. Termination of Employment:**\nThe discount privilege ceases immediately upon termination of employment.\n\n**7. Policy Abuse:**\nAbuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.', '# Company Policy: Customer Discounts & Promotions\n\n**1. Overview:**\nThis policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.\n\n**2. Types of Discounts:**\n\n  **a) First-Time Buyer Discount:**\n    - **Offer:** 10% off the first order.\n    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).\n    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.\n\n  **b) Loyalty Program Discounts:**\n    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).\n    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.\n    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.\n\n  **c) Promotional / Seasonal Sales:**\n    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).\n    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.\n    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).\n\n  **d) Tiered Discounts (Volume/Cart Value):**\n    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).\n    - **Mechanism:** Usually applied automatically at checkout.\n\n  **e) Abandoned Cart Recovery:**\n    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.\n    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.\n    - **Conditions:** Time-sensitive, usually single-use.\n\n**3. General Conditions & Exclusions:**\n- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).\n- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.\n- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).', ""# Standard Operating Procedure: Product Returns\n\n**1. Policy Overview:**\nCustomers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.\n\n**2. Eligibility:**\n- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.\n- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.\n- **Proof of Purchase:** Original receipt or order confirmation email is required.\n- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.\n\n**3. Return Procedure:**\n- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.\n- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).\n- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.\n- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).\n\n**4. Inspection and Refund Processing:**\n- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.\n- **Approval:** If the return meets eligibility criteria, a refund is processed.\n- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.\n- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.\n\n**5. Exchanges:**\nDirect exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item."", '**4. Discount Code Management:**\n- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.\n- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).\n- **Testing:** All codes must be tested before promotion begins.\n- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.\n\n**5. Approval:**\nMajor promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.']","# Company Policy: Employee Discounts
+
+**1. Policy Statement:**
+Actively employed staff are entitled to a discount on company products as a benefit of employment.
+
+**2. Discount Rate:**
+The standard employee discount is 20% off the retail price.
+
+**3. Eligibility & Verification:**
+- **Eligibility:** All full-time and part-time employees currently employed by the company.
+- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.
+- **Code Usage:** Each employee receives a unique, non-transferable discount code.
+
+**4. Usage Guidelines:**
+- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).
+- **Resale Prohibited:** Items purchased with the employee discount may not be resold.
+- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).
+- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.
+
+**5. Exclusions:**
+- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.
+- Gift cards are excluded from the employee discount.
+
+**6. Termination of Employment:**
+The discount privilege ceases immediately upon termination of employment.
+
+**7. Policy Abuse:**
+Abuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.\n\n---\n\n# Company Policy: Customer Discounts & Promotions
+
+**1. Overview:**
+This policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.
+
+**2. Types of Discounts:**
+
+  **a) First-Time Buyer Discount:**
+    - **Offer:** 10% off the first order.
+    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).
+    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.
+
+  **b) Loyalty Program Discounts:**
+    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).
+    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.
+    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.
+
+  **c) Promotional / Seasonal Sales:**
+    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).
+    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.
+    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).
+
+  **d) Tiered Discounts (Volume/Cart Value):**
+    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).
+    - **Mechanism:** Usually applied automatically at checkout.
+
+  **e) Abandoned Cart Recovery:**
+    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.
+    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.
+    - **Conditions:** Time-sensitive, usually single-use.
+
+**3. General Conditions & Exclusions:**
+- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).
+- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.
+- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).\n\n---\n\n# Standard Operating Procedure: Product Returns
+
+**1. Policy Overview:**
+Customers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.
+
+**2. Eligibility:**
+- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.
+- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.
+- **Proof of Purchase:** Original receipt or order confirmation email is required.
+- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.
+
+**3. Return Procedure:**
+- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.
+- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).
+- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.
+- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).
+
+**4. Inspection and Refund Processing:**
+- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.
+- **Approval:** If the return meets eligibility criteria, a refund is processed.
+- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.
+- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.
+
+**5. Exchanges:**
+Direct exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item.\n\n---\n\n**4. Discount Code Management:**
+- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.
+- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).
+- **Testing:** All codes must be tested before promotion begins.
+- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.
+
+**5. Approval:**
+Major promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.",The discount privilege ceases immediately upon termination of employment.,1.0,0.8834720064302622,0.9999999999,1.0,0.9472187517003177
+What is the Policy Statement regarding employee discounts at the company?,"['# Company Policy: Employee Discounts\n\n**1. Policy Statement:**\nActively employed staff are entitled to a discount on company products as a benefit of employment.\n\n**2. Discount Rate:**\nThe standard employee discount is 20% off the retail price.\n\n**3. Eligibility & Verification:**\n- **Eligibility:** All full-time and part-time employees currently employed by the company.\n- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.\n- **Code Usage:** Each employee receives a unique, non-transferable discount code.\n\n**4. Usage Guidelines:**\n- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).\n- **Resale Prohibited:** Items purchased with the employee discount may not be resold.\n- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).\n- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.\n\n**5. Exclusions:**\n- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.\n- Gift cards are excluded from the employee discount.\n\n**6. Termination of Employment:**\nThe discount privilege ceases immediately upon termination of employment.\n\n**7. Policy Abuse:**\nAbuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.', '# Company Policy: Customer Discounts & Promotions\n\n**1. Overview:**\nThis policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.\n\n**2. Types of Discounts:**\n\n  **a) First-Time Buyer Discount:**\n    - **Offer:** 10% off the first order.\n    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).\n    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.\n\n  **b) Loyalty Program Discounts:**\n    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).\n    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.\n    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.\n\n  **c) Promotional / Seasonal Sales:**\n    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).\n    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.\n    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).\n\n  **d) Tiered Discounts (Volume/Cart Value):**\n    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).\n    - **Mechanism:** Usually applied automatically at checkout.\n\n  **e) Abandoned Cart Recovery:**\n    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.\n    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.\n    - **Conditions:** Time-sensitive, usually single-use.\n\n**3. General Conditions & Exclusions:**\n- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).\n- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.\n- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).', '**4. Discount Code Management:**\n- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.\n- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).\n- **Testing:** All codes must be tested before promotion begins.\n- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.\n\n**5. Approval:**\nMajor promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.', ""# Standard Operating Procedure: Product Returns\n\n**1. Policy Overview:**\nCustomers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.\n\n**2. Eligibility:**\n- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.\n- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.\n- **Proof of Purchase:** Original receipt or order confirmation email is required.\n- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.\n\n**3. Return Procedure:**\n- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.\n- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).\n- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.\n- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).\n\n**4. Inspection and Refund Processing:**\n- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.\n- **Approval:** If the return meets eligibility criteria, a refund is processed.\n- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.\n- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.\n\n**5. Exchanges:**\nDirect exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item.""]","# Company Policy: Employee Discounts
+
+**1. Policy Statement:**
+Actively employed staff are entitled to a discount on company products as a benefit of employment.
+
+**2. Discount Rate:**
+The standard employee discount is 20% off the retail price.
+
+**3. Eligibility & Verification:**
+- **Eligibility:** All full-time and part-time employees currently employed by the company.
+- **Verification:** Employees must use their official company email address when placing orders. The discount code will be provided upon verification of employment status by HR or the direct manager.
+- **Code Usage:** Each employee receives a unique, non-transferable discount code.
+
+**4. Usage Guidelines:**
+- **Personal Use:** The discount is intended for personal use by the employee and their immediate family (spouse, domestic partner, children residing in the same household).
+- **Resale Prohibited:** Items purchased with the employee discount may not be resold.
+- **Frequency Limit:** A reasonable usage limit may be monitored (e.g., maximum $2000 in discounted purchases per calendar year, subject to review).
+- **Combination:** Cannot be combined with other promotional offers, sales, or discounts unless explicitly stated.
+
+**5. Exclusions:**
+- The discount may not apply to certain product categories, collaborations, or limited-edition items, as specified on the product page or internal announcements.
+- Gift cards are excluded from the employee discount.
+
+**6. Termination of Employment:**
+The discount privilege ceases immediately upon termination of employment.
+
+**7. Policy Abuse:**
+Abuse of this policy (e.g., sharing codes, resale) may result in disciplinary action, up to and including termination, and revocation of the discount privilege.\n\n---\n\n# Company Policy: Customer Discounts & Promotions
+
+**1. Overview:**
+This policy outlines the types of discounts offered to customers, eligibility requirements, and management procedures to ensure consistency and profitability.
+
+**2. Types of Discounts:**
+
+  **a) First-Time Buyer Discount:**
+    - **Offer:** 10% off the first order.
+    - **Mechanism:** Automatically applied via pop-up/email sign-up or using a specific code (e.g., WELCOME10).
+    - **Conditions:** Valid only once per customer/email address. Cannot be combined with other offers.
+
+  **b) Loyalty Program Discounts:**
+    - **Structure:** Tiered system based on lifetime spend or points accumulated (e.g., Bronze: 5% off, Silver: 10% off, Gold: 15% off + free shipping).
+    - **Mechanism:** Requires customer account creation. Discounts may be automatically applied at checkout when logged in or via unique codes.
+    - **Details:** Refer to the separate Loyalty Program Documentation for tier specifics and point system.
+
+  **c) Promotional / Seasonal Sales:**
+    - **Offer:** Varies (e.g., % off specific collections, site-wide sales, BOGO).
+    - **Mechanism:** Typically time-limited. May require a code or be automatically applied.
+    - **Conditions:** Clearly stated start/end dates, applicable products/collections, and any exclusions (e.g., new arrivals, gift cards).
+
+  **d) Tiered Discounts (Volume/Cart Value):**
+    - **Offer:** Increasing discount based on cart total (e.g., 10% off $100+, 15% off $150+).
+    - **Mechanism:** Usually applied automatically at checkout.
+
+  **e) Abandoned Cart Recovery:**
+    - **Offer:** Small incentive (e.g., 5-10% off or free shipping) to encourage completion of purchase.
+    - **Mechanism:** Sent via automated email sequence after a cart is abandoned for a set period.
+    - **Conditions:** Time-sensitive, usually single-use.
+
+**3. General Conditions & Exclusions:**
+- **Stacking:** Generally, only one discount code can be applied per order unless explicitly stated otherwise (e.g., free shipping threshold met alongside a percentage off).
+- **Exclusions:** Discounts typically do not apply to gift cards, taxes, or shipping costs unless specified.
+- **Validity:** All promotional codes have expiration dates and usage limits (e.g., one per customer).\n\n---\n\n**4. Discount Code Management:**
+- **Creation:** Codes are created in the e-commerce platform (Shopify Discounts section) by the Marketing or E-commerce Manager.
+- **Naming Convention:** Use clear, logical names (e.g., SPRING2024, WELCOME10).
+- **Testing:** All codes must be tested before promotion begins.
+- **Tracking:** Use UTM parameters and platform analytics to track the performance of discount codes.
+
+**5. Approval:**
+Major promotional campaigns or significant discount offers require approval from the Head of Marketing/E-commerce Director.\n\n---\n\n# Standard Operating Procedure: Product Returns
+
+**1. Policy Overview:**
+Customers are welcome to return products under specific conditions. Our goal is to make this process fair and efficient.
+
+**2. Eligibility:**
+- **Timeline:** Items must be returned within 30 calendar days of the original purchase date.
+- **Condition:** Products must be unused, unwashed, and in their original condition with all tags and packaging intact.
+- **Proof of Purchase:** Original receipt or order confirmation email is required.
+- **Exceptions:** Final sale items, perishable goods, and custom orders are not eligible for return unless defective.
+
+**3. Return Procedure:**
+- **Initiation:** Customer contacts support via email (support@examplestore.com) or phone (1-800-555-1234) with order number and reason for return.
+- **Authorization:** Support verifies eligibility and provides a Return Merchandise Authorization (RMA) number and a pre-paid shipping label (for domestic returns of non-sale items).
+- **Packaging:** Customer securely packages the item(s) including the original receipt/packing slip and clearly marks the RMA number on the outside of the box.
+- **Shipping:** Customer ships the package using the provided label or a carrier of their choice (customer pays shipping for international returns or if not using our label).
+
+**4. Inspection and Refund Processing:**
+- **Receiving:** Warehouse inspects returned items within 3 business days of receipt.
+- **Approval:** If the return meets eligibility criteria, a refund is processed.
+- **Refund Method:** Refunds are issued to the original payment method within 5-7 business days after approval. Store credit may be offered as an alternative.
+- **Rejection:** If a return is rejected (e.g., damaged, used, past deadline), the customer will be notified with the reason, and the item can be shipped back at the customer's expense.
+
+**5. Exchanges:**
+Direct exchanges are processed as a return and new order. Customer should return the original item per the above procedure and place a new order for the desired item.",Actively employed staff are entitled to a discount on company products as a benefit of employment.,1.0,0.8624033164587397,0.9999999999,1.0,0.9585045771660405

@@ -18,6 +18,7 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.tools import BaseTool, tool
+from langchain_core.runnables.graph import MermaidDrawMethod
 
 # Import both decorated and raw tool functions
 from .tools import (
@@ -42,6 +43,7 @@ from .models import AgentLogicResponse, DebugInfo, ToolUsage # Added import
 
 # Import for RAG - use relative imports as agent.py is inside 'app' which is inside 'backend'
 # and backend/ is the root for python path when uvicorn starts from backend/
+# Reverting to direct imports as Uvicorn runs from backend/, making backend/ the effective root for these.
 from data_processing import setup_vector_store
 from tools import create_query_internal_docs_tool
 import logging
@@ -410,4 +412,33 @@ def get_agent_response(query: str) -> AgentLogicResponse: # Changed return type
         )
 
 # At the end of the file, re-create the agent app to ensure it uses the latest definitions
-agent_app = create_graph() 
+agent_app = create_graph()
+
+if __name__ == "__main__":
+    print("Generating graph visualization...")
+    try:
+        # The compiled_app.get_graph() method returns an AGraph object (from pygraphviz)
+        # which has a draw method.
+        # We need to ensure necessary visualization dependencies are installed.
+        # For .draw_mermaid_png(), 'mermaid-cli' might be needed, or for .draw_png(), 'pygraphviz'.
+        # Langchain documentation usually shows .draw_mermaid_png()
+        
+        # Attempt to generate Mermaid PNG using Pyppeteer for local rendering
+        image_bytes = agent_app.get_graph().draw_mermaid_png(draw_method=MermaidDrawMethod.PYPPETEER)
+        # Fallback to draw_png() if Pyppeteer method fails or for comparison
+        # image_bytes = agent_app.get_graph().draw_png()
+        output_path = os.path.join(os.path.dirname(__file__), "..", "..", "agent_graph.png") # Save to workspace root
+        with open(output_path, "wb") as f:
+            f.write(image_bytes)
+        print(f"Successfully generated graph visualization: {os.path.abspath(output_path)}")
+        print("Used Pyppeteer for local Mermaid rendering.")
+
+    except ImportError as ie:
+        print(f"ImportError during graph visualization: {ie}")
+        print("Please make sure you have the necessary drawing libraries installed.")
+        print("Try: pip install 'langgraph[draw]'")
+        print("This typically includes 'pygraphviz' and/or 'mermaid-cli'.")
+    except Exception as e:
+        print(f"An error occurred during graph visualization: {e}")
+        print("Ensure that graphviz (for .draw_png()) or mermaid-cli (for .draw_mermaid_png()) is installed and in your PATH if using command-line tools directly.")
+        print("For LangGraph's built-in drawing, 'pip install langgraph[draw]' should provide necessary Python packages.") 

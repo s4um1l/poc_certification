@@ -16,3 +16,5 @@ wheels/
 backend/.env
 frontend/.env.local
  ../.env
+# Example folder
+example/

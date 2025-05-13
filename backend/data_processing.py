@@ -9,11 +9,14 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Determine script directory for robust path construction
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Configuration
-KNOWLEDGE_BASE_DIR = "knowledge_base"
-QDRANT_PATH = "./qdrant_db"  # Persist to local disk in backend/
+KNOWLEDGE_BASE_DIR = os.path.join(SCRIPT_DIR, "knowledge_base") # Path relative to this script
+QDRANT_PATH = os.path.join(SCRIPT_DIR, "qdrant_db") # Path relative to this script
 COLLECTION_NAME = "internal_docs"
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL = "s4um1l/saumil-ft-633e5453-0b3a-4693-9108-c6cc8a87730f"
 CHUNK_SIZE = 700
 CHUNK_OVERLAP = 50
 VECTOR_SIZE = 384
@@ -24,6 +27,9 @@ def setup_vector_store():
     Loads documents from the knowledge base, chunks them, generates embeddings,
     and sets up a persistent Qdrant vector store.
     """
+    logger.info(f"Knowledge base directory configured to: {KNOWLEDGE_BASE_DIR}")
+    logger.info(f"Qdrant database path configured to: {QDRANT_PATH}")
+    
     logger.info(f"Initializing embedding model: {EMBEDDING_MODEL}")
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
     vectorstore = None
