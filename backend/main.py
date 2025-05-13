@@ -1,13 +1,25 @@
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+# from pydantic import BaseModel # No longer needed directly if all models imported
 import uvicorn
 from app.agent import get_agent_response, agent_app
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Literal # Keep for type hinting if used outside models
 import json
 import logging
 from contextlib import asynccontextmanager
+# from vercel_ai.fastapi import StreamingTextResponse # Commenting out Vercel specific
+from starlette.responses import StreamingResponse # Using Starlette's generic StreamingResponse
+
+# Import models from app.models
+from app.models import (
+    QueryRequest, 
+    MessageVercelAI, 
+    ChatRequestVercelAI, 
+    ToolUsage, 
+    DebugInfo, 
+    AgentLogicResponse
+)
 
 # Import RAG setup functions and the agent module using relative paths
 # since main.py is run from within the backend directory
@@ -73,24 +85,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Define request and response models
-class QueryRequest(BaseModel):
-    query: str
-
-class ToolUsage(BaseModel):
-    step: int
-    tool: str
-    input: Dict[str, Any]
-    output: Any = None
-
-class DebugInfo(BaseModel):
-    tool_usage: List[ToolUsage]
-    message_count: int
-
-class ChatResponse(BaseModel):
-    response: str
-    debug: DebugInfo = None
 
 # Health check endpoint
 @app.get("/")
@@ -175,19 +169,43 @@ async def debug_agent(request: QueryRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Chat endpoint
-@app.post("/api/chat", response_model=None)
-async def chat_with_agent(request: QueryRequest):
+# Chat endpoint - MODIFIED
+@app.post("/api/chat")
+async def chat_with_agent_sdk(request: ChatRequestVercelAI): # Uses ChatRequestVercelAI from app.models
     try:
-        if not request.query.strip():
-            raise HTTPException(status_code=400, detail="Query cannot be empty")
+        if not request.messages:
+            raise HTTPException(status_code=400, detail="No messages provided")
+
+        last_message = request.messages[-1]
+        if last_message.role != 'user':
+            raise HTTPException(status_code=400, detail="Last message in the request must be from the user.")
         
-        # Ensure agent_module.tools is correctly populated before this call
-        # The lifespan event should handle this.
-        result = get_agent_response(request.query)
-        return result
+        user_query = last_message.content
+        if not user_query.strip():
+            raise HTTPException(status_code=400, detail="User query content cannot be empty")
+
+        # get_agent_response will now return an AgentLogicResponse Pydantic model instance
+        agent_response_obj: AgentLogicResponse = get_agent_response(user_query)
+        
+        # Log the Pydantic model (optional, but can be useful)
+        # logger.info(f"AgentLogicResponse object: {agent_response_obj.model_dump_json(indent=2)}")
+
+        response_content = agent_response_obj.response # Access via attribute
+        logger.info(f"Preparing to stream response content: '{response_content}'") # Log the content
+
+        async def content_stream():
+            if response_content: # Check if there is content to send
+                # Format according to Vercel AI SDK text streaming convention
+                yield f"0:{json.dumps(response_content)}\n"
+            # else: yield nothing or an empty marker if required by protocol
+
+        return StreamingResponse(content_stream(), media_type="text/plain")
+
+    except HTTPException: # Re-raise HTTPExceptions directly
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error in /api/chat (SDK): {e}", exc_info=True) # Keep exc_info for full traceback
+        raise HTTPException(status_code=500, detail="An internal server error occurred.")
 
 # Create a .env file if it doesn't exist
 if not os.path.exists(".env"):

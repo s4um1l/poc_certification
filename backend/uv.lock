@@ -1314,6 +1314,7 @@ dependencies = [
     { name = "torch" },
     { name = "typing-extensions" },
     { name = "uvicorn", extra = ["standard"] },
+    { name = "vercel-ai" },
 ]
 
 [package.metadata]
@@ -1337,6 +1338,7 @@ requires-dist = [
     { name = "torch", specifier = ">=2.2.2,<2.3.0" },
     { name = "typing-extensions", specifier = ">=4.7.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.30.3" },
+    { name = "vercel-ai" },
 ]
 
 [[package]]
@@ -2110,6 +2112,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/06/a7/b4e6a19925c900be9f98bec0a75e6e8f79bb53bdeb891916609ab3958967/uvloop-0.21.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:86975dca1c773a2c9864f4c52c5a55631038e387b47eaf56210f873887b6c8dc", size = 4693770 },
     { url = "https://files.pythonhosted.org/packages/ce/0c/f07435a18a4b94ce6bd0677d8319cd3de61f3a9eeb1e5f8ab4e8b5edfcb3/uvloop-0.21.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:461d9ae6660fbbafedd07559c6a2e57cd553b34b0065b6550685f6653a98c1cb", size = 4451321 },
     { url = "https://files.pythonhosted.org/packages/8f/eb/f7032be105877bcf924709c97b1bf3b90255b4ec251f9340cef912559f28/uvloop-0.21.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:183aef7c8730e54c9a3ee3227464daed66e37ba13040bb3f350bc2ddc040f22f", size = 4659022 },
+]
+
+[[package]]
+name = "vercel-ai"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "openai" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7a/ff/e8e0950ddb129c41b78f139f70976414039e05fd219fae4f053e5f2973e4/vercel_ai-0.1.0.tar.gz", hash = "sha256:381037f36365dd2631f5f2e5cbd27601959bdee7a6ac0b271d426629d06785b0", size = 6853 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/52/b3/14d201ad418fa1f2d11367640e03503761146ceb144728958ac882018170/vercel_ai-0.1.0-py3-none-any.whl", hash = "sha256:2125c3c62997025af466759c2622da41b77643791ff207d40df4f2d72e49286f", size = 5040 },
 ]
 
 [[package]]

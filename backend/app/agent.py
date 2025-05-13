@@ -38,6 +38,7 @@ from .tools import (
     _get_top_selling_products
 )
 from .tool_usage import reset_tracker, get_tool_usage, add_tool_usage
+from .models import AgentLogicResponse, DebugInfo, ToolUsage # Added import
 
 # Import for RAG - use relative imports as agent.py is inside 'app' which is inside 'backend'
 # and backend/ is the root for python path when uvicorn starts from backend/
@@ -331,7 +332,7 @@ def timeout_handler(timeout_seconds=30):
 
 # Apply timeout to the get_agent_response function
 @timeout_handler(timeout_seconds=25)
-def get_agent_response(query: str) -> Dict[str, Any]:
+def get_agent_response(query: str) -> AgentLogicResponse: # Changed return type
     """
     Get a response from the agent for a given query using LangGraph.
     
@@ -365,43 +366,48 @@ def get_agent_response(query: str) -> Dict[str, Any]:
             response_content = "Could not extract a final response from the agent."
 
         # Extract tool usage from the tracker
-        tracked_usage = get_tool_usage()
+        tracked_usage_raw = get_tool_usage()
+        # Convert raw tool usage dicts to ToolUsage Pydantic models
+        tool_usage_objects = [ToolUsage(**usage) for usage in tracked_usage_raw] if tracked_usage_raw else []
 
-        return {
-            "response": response_content,
-            "debug": {
-                "tool_usage": tracked_usage,
-                "message_count": len(final_state.get("messages", [])), # Count messages in the final state
-                "error": None # Clear previous error if successful
-            },
-            "trace_data": None # Placeholder for potential tracing integration
-        }
+
+        return AgentLogicResponse(
+            response=response_content,
+            debug=DebugInfo(
+                tool_usage=tool_usage_objects,
+                message_count=len(final_state.get("messages", [])),
+                error=None
+            ),
+            trace_data=None
+        )
     
     except TimeoutError as te:
         # Handle specific timeout error from decorator
         print(f"TimeoutError in get_agent_response: {str(te)}")
-        tracked_usage = get_tool_usage() # Get usage even on timeout
-        return {
-            "response": "I'm sorry, but it took too long to process your request. Please try again or simplify your query.",
-            "debug": {
-                "tool_usage": tracked_usage,
-                "message_count": 0, # No final state available
-                "error": str(te)
-            },
-            "trace_data": None
-        }
+        tracked_usage_raw = get_tool_usage() # Get usage even on timeout
+        tool_usage_objects = [ToolUsage(**usage) for usage in tracked_usage_raw] if tracked_usage_raw else []
+        return AgentLogicResponse(
+            response="I'm sorry, but it took too long to process your request. Please try again or simplify your query.",
+            debug=DebugInfo(
+                tool_usage=tool_usage_objects,
+                message_count=0, # No final state available
+                error=str(te)
+            ),
+            trace_data=None
+        )
     except Exception as e:
         print(f"Error in get_agent_response: {str(e)}")
-        tracked_usage = get_tool_usage() # Get usage even on other errors
-        return {
-            "response": f"I'm sorry, but there was an error processing your request. Please try again.",
-            "debug": {
-                "tool_usage": tracked_usage,
-                "message_count": 0, # No final state available
-                "error": str(e)
-            },
-            "trace_data": None
-        }
+        tracked_usage_raw = get_tool_usage() # Get usage even on other errors
+        tool_usage_objects = [ToolUsage(**usage) for usage in tracked_usage_raw] if tracked_usage_raw else []
+        return AgentLogicResponse(
+            response=f"I'm sorry, but there was an error processing your request. Please try again.",
+            debug=DebugInfo(
+                tool_usage=tool_usage_objects,
+                message_count=0, # No final state available
+                error=str(e)
+            ),
+            trace_data=None
+        )
 
 # At the end of the file, re-create the agent app to ensure it uses the latest definitions
 agent_app = create_graph() 
