@@ -72,11 +72,11 @@ export default function Chat() {
                           className="justify-start text-left h-auto py-2 w-full border-[#e3e5e7] hover:bg-[#f1f8f5] hover:border-[#008060] transition-colors"
                           onClick={() =>
                             handleInputChange({
-                              target: { value: "What were the total sales for Product ID 'P123' in the last 30 days?" },
+                              target: { value: "Which of my top-selling products are at risk of running out of stock soon?" },
                             } as any)
                           }
                         >
-                          "What were the total sales for Product ID 'P123' in the last 30 days?"
+                          "Which of my top-selling products are at risk of running out of stock soon?"
                         </Button>
                         <Button
                           variant="outline"
@@ -84,12 +84,12 @@ export default function Chat() {
                           onClick={() =>
                             handleInputChange({
                               target: {
-                                value: "What's the average daily sales quantity for 'P123' over the past month?",
+                                value: "Compare the sales and inventory status of my top 3 selling Apparel products",
                               },
                             } as any)
                           }
                         >
-                          "What's the average daily sales quantity for 'P123' over the past month?"
+                          "Compare the sales and inventory status of my top 3 selling Apparel products"
                         </Button>
                       </div>
                     </div>
@@ -105,11 +105,11 @@ export default function Chat() {
                           className="justify-start text-left h-auto py-2 w-full border-[#e3e5e7] hover:bg-[#f1f8f5] hover:border-[#008060] transition-colors"
                           onClick={() =>
                             handleInputChange({
-                              target: { value: "How many units of Product ID 'P456' are currently in stock?" },
+                              target: { value: "For products in the Electronics category, show me inventory levels and recent sales performance" },
                             } as any)
                           }
                         >
-                          "How many units of Product ID 'P456' are currently in stock?"
+                          "For products in the Electronics category, show me inventory levels and recent sales performance"
                         </Button>
                         <Button
                           variant="outline"
@@ -118,12 +118,12 @@ export default function Chat() {
                             handleInputChange({
                               target: {
                                 value:
-                                  "Estimate the days of stock remaining for 'P456' based on the last 30 days of sales.",
+                                  "What's my overall inventory health - show me products with critical stock levels and their sales performance",
                               },
                             } as any)
                           }
                         >
-                          "Estimate the days of stock remaining for 'P456'..."
+                          "What's my overall inventory health - show me products with critical stock levels and their sales performance"
                         </Button>
                         <Button
                           variant="outline"
