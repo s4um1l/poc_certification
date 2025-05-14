@@ -76,7 +76,7 @@ app = FastAPI(
 origins = [
     "http://localhost:3000",  # Next.js default port
     "http://localhost:5173",
-    "https://poccertification-production.up.railway.app",
+    "https://core-production-693e.up.railway.app",
     # Add your deployed frontend URL when available
 ]
 
